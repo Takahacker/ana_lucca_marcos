@@ -80,7 +80,7 @@ class Player(pygame.sprite.Sprite):
 
 # ----- Criação de objetos
 player1 = Player(player_image, {'up': pygame.K_w, 'down': pygame.K_s, 'left': pygame.K_a, 'right': pygame.K_d})
-player2 = Player(player_image, {'up': pygame.K_t, 'down': pygame.K_f, 'left': pygame.K_g, 'right': pygame.K_h})
+player2 = Player(player_image, {'up': pygame.K_t, 'down': pygame.K_g, 'left': pygame.K_f, 'right': pygame.K_h})
 
 class Peixe(pygame.sprite.Sprite):
     def __init__(self, imgagens):
