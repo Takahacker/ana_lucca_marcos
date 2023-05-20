@@ -111,12 +111,16 @@ while game:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_w:
                 player.speedy = -3
+                player.speedx = 0
             if event.key == pygame.K_s:
                 player.speedy = 3
+                player.speedx = 0
             if event.key == pygame.K_a:
                 player.speedx = -3
+                player.speedy = 0
             if event.key == pygame.K_d:
                 player.speedx = 3
+                player.speedy = 0
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_w or event.key == pygame.K_s:
                 player.speedy = 0
