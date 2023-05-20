@@ -87,7 +87,6 @@ class Peixe(pygame.sprite.Sprite):
 
 all_peixes = pygame.sprite.Group()
 all_sprites = pygame.sprite.Group()
-
 all_sprites.add(player)
 
 for i in range(6):
@@ -126,6 +125,10 @@ while game:
 
     # ----- Atualiza estado do jogo
     all_sprites.update()
+
+    # Verifica colisão entre o jogador e os obstáculos
+    if pygame.sprite.spritecollide(player, all_peixes, False):
+        game = False
 
     for peixe in all_peixes:
         peixe.update()
