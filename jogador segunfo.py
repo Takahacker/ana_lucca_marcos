@@ -49,15 +49,19 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         if keys[self.keys['up']]:
             self.speedy = -3
+            self.speedx = 0
         elif keys[self.keys['down']]:
             self.speedy = 3
+            self.speedx = 0
         else:
             self.speedy = 0
 
         if keys[self.keys['left']]:
             self.speedx = -3
+            self.speedy = 0
         elif keys[self.keys['right']]:
             self.speedx = 3
+            self.speedy = 0
         else:
             self.speedx = 0
 
