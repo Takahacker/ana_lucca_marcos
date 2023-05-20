@@ -43,10 +43,12 @@ class Player(pygame.sprite.Sprite):
         self.rect.centerx = WIDTH / 2
         self.rect.bottom = HEIGHT - 10
         self.speedx = 0
+        self.speedy= 0
 
     def update(self):
         # Atualização da posição da nave
         self.rect.x += self.speedx
+        self.rect.y += self.speedy
 
         # Mantem dentro da tela
         if self.rect.right > WIDTH:
@@ -107,12 +109,26 @@ while game:
         # ----- Verifica consequências
         if event.type == pygame.QUIT:
             game = False
+        # Verifica se apertou alguma tecla.
+        if event.type == pygame.KEYDOWN:
+            # Dependendo da tecla, altera a velocidade.
+            if event.key == pygame.K_LEFT:
+                player.speedx -= 8
+            if event.key == pygame.K_RIGHT:
+                player.speedx += 8
+        # Verifica se soltou alguma tecla.
+        if event.type == pygame.KEYUP:
+            # Dependendo da tecla, altera a velocidade.
+            if event.key == pygame.K_LEFT:
+                player.speedx += 8
+            if event.key == pygame.K_RIGHT:
+                player.speedx -= 8
 
     # ----- Atualiza estado do jogo
     # Atualizando a posição dos peixes
     for peixe in all_peixes:
         peixe.update()
-
+    player.update()
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
