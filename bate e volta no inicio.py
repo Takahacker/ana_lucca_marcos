@@ -107,6 +107,12 @@ all_peixes = pygame.sprite.Group()
 all_sprites = pygame.sprite.Group()
 
 # Adiciona jogadores ao grupo de sprites
+player1.rect.centerx = WIDTH / 3
+player1.rect.bottom = HEIGHT - 10
+
+player2.rect.centerx = (2 * WIDTH) / 3
+player2.rect.bottom = HEIGHT - 10
+
 all_sprites.add(player1)
 all_sprites.add(player2)
 
@@ -119,6 +125,7 @@ for i in range(4):
     all_peixes.add(tubarao)
 
 clock = pygame.time.Clock()
+timer = 0
 FPS = 30
 
 # ===== Loop principal =====
@@ -152,7 +159,7 @@ while game:
 
     all_peixes.draw(window)
     all_sprites.draw(window)
-
+    timer+=1
     pygame.display.update()
 
 # ===== Finalização =====
