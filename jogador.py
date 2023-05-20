@@ -118,6 +118,7 @@ while game:
     window.blit(background, (0, 0))
     # Desenhando meteoros
     all_peixes.draw(window)
+    all_sprites.draw(window)
 
     pygame.display.update()  # Mostra o novo frame para o jogador
 
