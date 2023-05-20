@@ -27,8 +27,8 @@ peixe1_small = pygame.transform.scale(peixe1, (largura, altura))
 tubarao = pygame.image.load('imagens/shark03.png').convert_alpha()
 tubarao_grande = pygame.transform.scale(tubarao, (larg_tub, alt_tub))
 
-player = pygame.image.load('imagens/jogador2.png').convert_alpha()
-player_image = pygame.transform.scale(player, (largura, altura))
+player_image = pygame.image.load('imagens/jogador2.png').convert_alpha()
+player_image = pygame.transform.scale(player_image, (largura, altura))
 
 # ----- Inicia estruturas de dados
 
@@ -43,7 +43,6 @@ class Player(pygame.sprite.Sprite):
         self.rect.centerx = WIDTH / 2
         self.rect.bottom = HEIGHT - 10
         self.speedx = 0
-        self.assets = imagens
 
     def update(self):
         # Atualização da posição da nave
