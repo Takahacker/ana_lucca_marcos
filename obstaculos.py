@@ -24,7 +24,7 @@ background = pygame.image.load('imagens/fundo_mario.jpg').convert()
 peixe1 = pygame.image.load('imagens/peixe1.png').convert_alpha()
 peixe1_small = pygame.transform.scale(peixe1, (largura, altura))
 
-tubarao = pygame.image.load('imagens/tubarao.png').convert_alpha()
+tubarao = pygame.image.load('imagens/shark03.png').convert_alpha()
 tubarao_grande = pygame.transform.scale(tubarao, (larg_tub, alt_tub))
 
 
@@ -65,9 +65,11 @@ class Peixe(pygame.sprite.Sprite):
 
 all_peixes = pygame.sprite.Group()
 
-for i in range(4):
+for i in range(6):
     peixe1 = Peixe(peixe1_small)
     all_peixes.add(peixe1)
+
+for i in range(4):
     tubarao = Peixe(tubarao_grande)
     all_peixes.add(tubarao)
 
