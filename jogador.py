@@ -34,16 +34,15 @@ player_image = pygame.transform.scale(player, (largura, altura))
 
 game = True
 class Player(pygame.sprite.Sprite):
-    def __init__(self, groups, imagens):
+    def __init__(self, imagens):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = imagens['jogador2']
+        self.image = imagens
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / 2
         self.rect.bottom = HEIGHT - 10
         self.speedx = 0
-        self.groups = groups
         self.assets = imagens
 
     def update(self):
