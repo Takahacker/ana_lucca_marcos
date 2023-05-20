@@ -47,7 +47,7 @@ class Peixe(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 0
         self.rect.y = random.randint(-100, -altura)
-        self.speedx = -1
+        self.speedx = 2
         self.speedy = 0
 
     def update(self):
@@ -59,13 +59,13 @@ class Peixe(pygame.sprite.Sprite):
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             self.rect.x = 0
             self.rect.y = random.randint(-100, HEIGHT - altura)
-            self.speedx = random.randint(0, 4)
+            self.speedx = random.randint(2, 4)
             self.speedy = 0
 
 
 all_peixes = pygame.sprite.Group()
 
-for i in range(8):
+for i in range(4):
     peixe1 = Peixe(peixe1_small)
     all_peixes.add(peixe1)
     tubarao = Peixe(tubarao_grande)
