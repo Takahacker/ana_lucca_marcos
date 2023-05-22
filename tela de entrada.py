@@ -60,7 +60,7 @@ while executando:
         altura = 60
         larg_tub = 130
         alt_tub = 90
-        font = pygame.font.SysFont(None, 48)
+        font = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 48)
         background = pygame.image.load('imagens/BACKGROUND.png').convert()
 
         agua_viva = pygame.image.load('imagens/aguaviva_png.png').convert_alpha()
