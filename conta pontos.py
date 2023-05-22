@@ -16,7 +16,7 @@ altura = 38
 larg_tub = 130
 alt_tub = 90
 font = pygame.font.SysFont(None, 48)
-background = pygame.image.load('imagem/pygame(2).jpg').convert()
+background = pygame.image.load('BACKGROUND').convert()
 
 peixe1 = pygame.image.load('imagens/peixe1.png').convert_alpha()
 peixe1_small = pygame.transform.scale(peixe1, (largura, altura))
