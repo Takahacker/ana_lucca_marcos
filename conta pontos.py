@@ -16,7 +16,7 @@ altura = 38
 larg_tub = 130
 alt_tub = 90
 font = pygame.font.SysFont(None, 48)
-background = pygame.image.load('imagens/fundo_mario.jpg').convert()
+background = pygame.image.load('imagem/pygame(2).jpg').convert()
 
 peixe1 = pygame.image.load('imagens/peixe1.png').convert_alpha()
 peixe1_small = pygame.transform.scale(peixe1, (largura, altura))
@@ -30,6 +30,8 @@ player_image = pygame.transform.scale(player_image, (largura, altura))
 # ----- Inicia estruturas de dados
 game = True
 score = 0
+player1_score = 0
+player2_score = 0
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, imagens, keys):
@@ -142,24 +144,41 @@ while game:
     if pygame.sprite.spritecollide(player1, all_peixes, False):
         player1.rect.centerx = WIDTH / 2
         player1.rect.bottom = HEIGHT - 10
+        if player1_score >= 2:
+            game = False
 
     if pygame.sprite.spritecollide(player2, all_peixes, False):
         player2.rect.centerx = WIDTH / 2
         player2.rect.bottom = HEIGHT - 10
+        if player2_score >= 2:
+            game = False
 
     for peixe in all_peixes:
+        if pygame.sprite.collide_rect(peixe, player1):
+            if peixe.speedx > 0:
+                player1_score += 1
+                peixe.speedx = 0
+        if pygame.sprite.collide_rect(peixe, player2):
+            if peixe.speedx > 0:
+                player2_score += 1
+                peixe.speedx = 0
+
         peixe.update()
 
     # Verifica se jogador encostou na parte superior da tela
     if player1.rect.top <= 0:
-        score += 1
+        player1_score += 1
         player1.rect.centerx = WIDTH / 2
         player1.rect.bottom = HEIGHT - 10
+        if player1_score >= 2:
+            game = False
 
     if player2.rect.top <= 0:
-        score += 1
+        player2_score += 1
         player2.rect.centerx = WIDTH / 2
         player2.rect.bottom = HEIGHT - 10
+        if player2_score >= 2:
+            game = False
 
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor preta
@@ -169,8 +188,18 @@ while game:
     all_sprites.draw(window)
 
     # Exibe a pontuação na tela
-    score_text = font.render("Pontuação: " + str(score), True, (255, 255, 255))
-    window.blit(score_text, (10, 10))
+    player1_score_text = font.render("Pontuação Jogador 1: " + str(player1_score), True, (255, 255, 255))
+    player2_score_text = font.render("Pontuação Jogador 2: " + str(player2_score), True, (255, 255, 255))
+    window.blit(player1_score_text, (10, 10))
+    window.blit(player2_score_text, (10, 60))
+
+    # Verifica se algum jogador atingiu dois pontos e exibe tela de "ganhei"
+    if player1_score >= 10:
+        ganhei_text = font.render("Jogador 1 ganhou!", True, (255, 255, 255))
+        window.blit(ganhei_text, (WIDTH/2 - 120, HEIGHT/2 - 24))
+    elif player2_score >= 10:
+        ganhei_text = font.render("Jogador 2 ganhou!", True, (255, 255, 255))
+        window.blit(ganhei_text, (WIDTH/2 - 120, HEIGHT/2 - 24))
 
     pygame.display.update()
 
