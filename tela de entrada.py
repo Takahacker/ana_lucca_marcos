@@ -1,72 +1,227 @@
-import threading
-import tkinter as tk
 import pygame
+    
+# Inicialização do Pygame
+pygame.init()
 
-# Função que será executada na nova thread
-def run_pygame():
-    # Inicialização do Pygame
-    pygame.init()
+# Configurações da janela em Pygame
+largura = 800
+altura = 600
+janela = pygame.display.set_mode((largura, altura))
+pygame.display.set_caption("Botão de Reprodução")
 
-    # Configurações da janela em Pygame
-    largura = 800
-    altura = 600
-    janela = pygame.display.set_mode((largura, altura))
-    pygame.display.set_caption("Botão de Reprodução")
+# Cores em Pygame
+BRANCO = (255, 255, 255)
+VERDE = (0, 255, 0)
 
-    # Cores em Pygame
-    BRANCO = (255, 255, 255)
-    VERDE = (0, 255, 0)
+# Posição e dimensões do botão em Pygame
+botao_largura = 100
+botao_altura = 100
+botao_posicao_x = (largura - botao_largura) // 2
+botao_posicao_y = (altura - botao_altura) // 2
 
-    # Posição e dimensões do botão em Pygame
-    botao_largura = 100
-    botao_altura = 100
-    botao_posicao_x = (largura - botao_largura) // 2
-    botao_posicao_y = (altura - botao_altura) // 2
+# Variável para verificar se o botão está pressionado em Pygame
+botao_clicado = False
 
-    # Variável para verificar se o botão está pressionado em Pygame
-    botao_clicado = False
+# Loop principal do jogo em Pygame
+executando = True
+while executando:
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            executando = False
+        elif evento.type == pygame.MOUSEBUTTONDOWN:
+            if botao_posicao_x <= pygame.mouse.get_pos()[0] <= botao_posicao_x + botao_largura \
+                    and botao_posicao_y <= pygame.mouse.get_pos()[1] <= botao_posicao_y + botao_altura:
+                botao_clicado = True
 
-    # Loop principal do jogo em Pygame
-    executando = True
-    while executando:
-        for evento in pygame.event.get():
-            if evento.type == pygame.QUIT:
-                executando = False
-            elif evento.type == pygame.MOUSEBUTTONDOWN:
-                if botao_posicao_x <= pygame.mouse.get_pos()[0] <= botao_posicao_x + botao_largura \
-                        and botao_posicao_y <= pygame.mouse.get_pos()[1] <= botao_posicao_y + botao_altura:
-                    botao_clicado = True
+    janela.fill(BRANCO)
 
-        janela.fill(BRANCO)
-
-        # Desenha o botão em Pygame
-        pygame.draw.rect(janela, VERDE, (botao_posicao_x, botao_posicao_y, botao_largura, botao_altura))
-        if not botao_clicado:
-            pygame.draw.polygon(janela, BRANCO, [(botao_posicao_x + 30, botao_posicao_y + 20),
+    # Desenha o botão em Pygame
+    pygame.draw.rect(janela, VERDE, (botao_posicao_x, botao_posicao_y, botao_largura, botao_altura))
+    if not botao_clicado:
+        pygame.draw.polygon(janela, BRANCO, [(botao_posicao_x + 30, botao_posicao_y + 20),
                                                   (botao_posicao_x + 30, botao_posicao_y + 80),
                                                   (botao_posicao_x + 80, botao_posicao_y + 50)])
+    else:
+                # ----- Importa e inicia pacotes
+        import pygame
+        import random
 
-        pygame.display.update()
+        pygame.init()
 
-    # Encerrando o Pygame
-    pygame.quit()
+        # ----- Gera tela principal
+        WIDTH = 600
+        HEIGHT = 600
+        window = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption('Crossy Ocean')
 
-# Função que será executada quando o botão de executar for clicado em Tkinter
-def executar_codigo():
-    # Cria a nova thread para executar o Pygame
-    thread_pygame = threading.Thread(target=run_pygame)
-    thread_pygame.start()
+        # ----- Inicia assets
+        largura = 50
+        altura = 38
+        larg_tub = 130
+        alt_tub = 90
+        font = pygame.font.SysFont(None, 48)
+        background = pygame.image.load('imagens/fundo_mario.jpg').convert()
 
-# Cria uma instância da janela principal em Tkinter
-janela = tk.Tk()
+        peixe1 = pygame.image.load('imagens/peixe1.png').convert_alpha()
+        peixe1_small = pygame.transform.scale(peixe1, (largura, altura))
 
-# Configurações da janela em Tkinter
-janela.title("Tela de Execução")
-janela.geometry("400x300")
+        tubarao = pygame.image.load('imagens/shark03.png').convert_alpha()
+        tubarao_grande = pygame.transform.scale(tubarao, (larg_tub, alt_tub))
 
-# Botão para executar o código em Tkinter
-botao_executar = tk.Button(janela, text="Executar", command=executar_codigo)
-botao_executar.pack()
+        player_image = pygame.image.load('imagens/jogador2.png').convert_alpha()
+        player_image = pygame.transform.scale(player_image, (largura, altura))
 
-# Loop principal da janela em Tkinter
-janela.mainloop()
+        # ----- Inicia estruturas de dados
+        game = True
+        score = 0
+
+        class Player(pygame.sprite.Sprite):
+            def __init__(self, imagens, keys):
+                # Construtor da classe mãe (Sprite).
+                pygame.sprite.Sprite.__init__(self)
+
+                self.image = imagens
+                self.rect = self.image.get_rect()
+                self.rect.centerx = WIDTH / 2
+                self.rect.bottom = HEIGHT - 10
+                self.speedx = 0
+                self.speedy = 0
+                self.keys = keys
+
+            def update(self):
+                # Atualização da posição do jogador
+                keys = pygame.key.get_pressed()
+                if keys[self.keys['up']]:
+                    self.speedy = -3
+                    self.speedx = 0
+                elif keys[self.keys['down']]:
+                    self.speedy = 3
+                    self.speedx = 0
+                else:
+                    self.speedy = 0
+
+                if keys[self.keys['left']]:
+                    self.speedx = -3
+                    self.speedy = 0
+                elif keys[self.keys['right']]:
+                    self.speedx = 3
+                    self.speedy = 0
+                else:
+                    self.speedx = 0
+
+                self.rect.x += self.speedx
+                self.rect.y += self.speedy
+
+                # Mantém dentro da tela
+                if self.rect.right > WIDTH:
+                    self.rect.right = WIDTH
+                if self.rect.left < 0:
+                    self.rect.left = 0
+                if self.rect.bottom > HEIGHT:
+                    self.rect.bottom = HEIGHT
+                if self.rect.top < 0:
+                    self.rect.top = 0
+
+        class Peixe(pygame.sprite.Sprite):
+            def __init__(self, imgagens):
+                # Construtor da classe mãe (Sprite).
+                pygame.sprite.Sprite.__init__(self)
+
+                self.image = imgagens
+                self.rect = self.image.get_rect()
+                self.rect.x = 0
+                self.rect.y = random.randint(-100, -altura)
+                self.speedx = 2
+                self.speedy = 0
+
+            def update(self):
+                # Atualizando a posição do peixe
+                self.rect.x += self.speedx
+                self.rect.y += self.speedy
+
+                # Se o peixe passar do final da tela, volta para cima e sorteia
+                # novas posições e velocidades
+                if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
+                    self.rect.x = 0
+                    self.rect.y = random.randint(-100, HEIGHT - altura)
+                    self.speedx = random.randint(2, 4)
+                    self.speedy = 0
+
+        # ----- Criação de objetos
+        player1 = Player(player_image, {'up': pygame.K_w, 'down': pygame.K_s, 'left': pygame.K_a, 'right': pygame.K_d})
+        player2 = Player(player_image, {'up': pygame.K_t, 'down': pygame.K_g, 'left': pygame.K_f, 'right': pygame.K_h})
+
+        all_peixes = pygame.sprite.Group()
+        all_sprites = pygame.sprite.Group()
+
+        # Adiciona jogadores ao grupo de sprites
+        all_sprites.add(player1)
+        all_sprites.add(player2)
+
+        for i in range(6):
+            peixe1 = Peixe(peixe1_small)
+            all_peixes.add(peixe1)
+
+        for i in range(4):
+            tubarao = Peixe(tubarao_grande)
+            all_peixes.add(tubarao)
+
+        clock = pygame.time.Clock()
+        FPS = 30
+
+        # ===== Loop principal =====
+        while game:
+            clock.tick(FPS)
+            
+            # ----- Trata eventos
+            for event in pygame.event.get():
+                # ----- Verifica consequências
+                if event.type == pygame.QUIT:
+                    game = False
+
+            # ----- Atualiza estado do jogo
+            all_sprites.update()
+
+            # Verifica colisão entre os jogadores e os obstáculos
+            if pygame.sprite.spritecollide(player1, all_peixes, False):
+                player1.rect.centerx = WIDTH / 2
+                player1.rect.bottom = HEIGHT - 10
+
+            if pygame.sprite.spritecollide(player2, all_peixes, False):
+                player2.rect.centerx = WIDTH / 2
+                player2.rect.bottom = HEIGHT - 10
+
+            for peixe in all_peixes:
+                peixe.update()
+
+            # Verifica se jogador encostou na parte superior da tela
+            if player1.rect.top <= 0:
+                score += 1
+                player1.rect.centerx = WIDTH / 2
+                player1.rect.bottom = HEIGHT - 10
+
+            if player2.rect.top <= 0:
+                score += 1
+                player2.rect.centerx = WIDTH / 2
+                player2.rect.bottom = HEIGHT - 10
+
+            # ----- Gera saídas
+            window.fill((0, 0, 0))  # Preenche com a cor preta
+            window.blit(background, (0, 0))
+
+            all_peixes.draw(window)
+            all_sprites.draw(window)
+
+            # Exibe a pontuação na tela
+            score_text = font.render("Pontuação: " + str(score), True, (255, 255, 255))
+            window.blit(score_text, (10, 10))
+
+            pygame.display.update()
+
+        # ===== Finalização =====
+        pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
+
+    pygame.display.update()
+
+# Encerrando o Pygame
+pygame.quit()
