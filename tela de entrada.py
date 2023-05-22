@@ -55,20 +55,20 @@ while executando:
         pygame.display.set_caption('Crossy Ocean')
 
         # ----- Inicia assets
-        largura = 50
-        altura = 38
+        largura = 60
+        altura = 60
         larg_tub = 130
         alt_tub = 90
         font = pygame.font.SysFont(None, 48)
         background = pygame.image.load('imagens/fundo_mario.jpg').convert()
 
-        peixe1 = pygame.image.load('imagens/peixe1.png').convert_alpha()
-        peixe1_small = pygame.transform.scale(peixe1, (largura, altura))
+        agua_viva = pygame.image.load('imagens/aguaviva_png.png').convert_alpha()
+        agua_viva_small = pygame.transform.scale(agua_viva, (largura, altura))
 
         tubarao = pygame.image.load('imagens/shark03.png').convert_alpha()
         tubarao_grande = pygame.transform.scale(tubarao, (larg_tub, alt_tub))
 
-        player_image = pygame.image.load('imagens/jogador2.png').convert_alpha()
+        player_image = pygame.image.load('imagens/bob_esponja_direita.png').convert_alpha()
         player_image = pygame.transform.scale(player_image, (largura, altura))
 
         # ----- Inicia estruturas de dados
@@ -156,10 +156,14 @@ while executando:
 
         # Adiciona jogadores ao grupo de sprites
         all_sprites.add(player1)
+        player1.rect.centerx = WIDTH / 3
+        player1.rect.bottom = HEIGHT - 8
         all_sprites.add(player2)
+        player2.rect.centerx = WIDTH / 2
+        player2.rect.bottom = HEIGHT - 12
 
         for i in range(6):
-            peixe1 = Peixe(peixe1_small)
+            peixe1 = Peixe(agua_viva_small)
             all_peixes.add(peixe1)
 
         for i in range(4):
@@ -184,12 +188,12 @@ while executando:
 
             # Verifica colisão entre os jogadores e os obstáculos
             if pygame.sprite.spritecollide(player1, all_peixes, False):
-                player1.rect.centerx = WIDTH / 2
-                player1.rect.bottom = HEIGHT - 10
+                player1.rect.centerx = WIDTH / 3
+                player1.rect.bottom = HEIGHT - 8
 
             if pygame.sprite.spritecollide(player2, all_peixes, False):
                 player2.rect.centerx = WIDTH / 2
-                player2.rect.bottom = HEIGHT - 10
+                player2.rect.bottom = HEIGHT - 15
 
             for peixe in all_peixes:
                 peixe.update()
@@ -197,13 +201,13 @@ while executando:
             # Verifica se jogador encostou na parte superior da tela
             if player1.rect.top <= 0:
                 score += 1
-                player1.rect.centerx = WIDTH / 2
-                player1.rect.bottom = HEIGHT - 10
+                player1.rect.centerx = WIDTH / 3
+                player1.rect.bottom = HEIGHT - 8
 
             if player2.rect.top <= 0:
                 score += 1
                 player2.rect.centerx = WIDTH / 2
-                player2.rect.bottom = HEIGHT - 10
+                player2.rect.bottom = HEIGHT - 15
 
             # ----- Gera saídas
             window.fill((0, 0, 0))  # Preenche com a cor preta
