@@ -1,5 +1,3 @@
-import threading
-import tkinter as tk
 import pygame
 
 def executar_codigo():
