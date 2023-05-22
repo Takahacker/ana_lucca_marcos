@@ -16,7 +16,7 @@ altura = 38
 larg_tub = 130
 alt_tub = 90
 font = pygame.font.SysFont(None, 48)
-background = pygame.image.load('BACKGROUND').convert()
+background = pygame.image.load('imagens/BACKGROUND.png').convert()
 
 peixe1 = pygame.image.load('imagens/peixe1.png').convert_alpha()
 peixe1_small = pygame.transform.scale(peixe1, (largura, altura))
@@ -144,13 +144,13 @@ while game:
     if pygame.sprite.spritecollide(player1, all_peixes, False):
         player1.rect.centerx = WIDTH / 2
         player1.rect.bottom = HEIGHT - 10
-        if player1_score >= 2:
+        if player1_score >= 10:
             game = False
 
     if pygame.sprite.spritecollide(player2, all_peixes, False):
         player2.rect.centerx = WIDTH / 2
         player2.rect.bottom = HEIGHT - 10
-        if player2_score >= 2:
+        if player2_score >= 10:
             game = False
 
     for peixe in all_peixes:
@@ -166,18 +166,18 @@ while game:
         peixe.update()
 
     # Verifica se jogador encostou na parte superior da tela
-    if player1.rect.top <= 0:
+    if player1.rect.top <= 10:
         player1_score += 1
         player1.rect.centerx = WIDTH / 2
         player1.rect.bottom = HEIGHT - 10
-        if player1_score >= 2:
+        if player1_score >= 10:
             game = False
 
     if player2.rect.top <= 0:
         player2_score += 1
         player2.rect.centerx = WIDTH / 2
         player2.rect.bottom = HEIGHT - 10
-        if player2_score >= 2:
+        if player2_score >= 10:
             game = False
 
     # ----- Gera saídas
