@@ -56,26 +56,15 @@ while executando:
         pygame.display.set_caption('Crossy Ocean')
 
         # ----- Inicia assets
-        largura_jog = 60
-        altura_jog = 60
-        altura_agua = 50
-        largura_agua = 40
+        largura = 60
+        altura = 60
         larg_tub = 130
         alt_tub = 90
-
-        font = pygame.font.SysFont(None, 48)
-        background = pygame.image.load('imagens/BACKGROUND.png').convert()
-
-        font = pygame.font.SysFont(None, 48)
+        font = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 48)
         background = pygame.image.load('imagens/fundo_mario.jpg').convert()
-
-
-        font = pygame.font.SysFont(None, 48)
-        background = pygame.image.load('imagens/fundo_mario.jpg').convert()
-
 
         agua_viva = pygame.image.load('imagens/aguaviva_png.png').convert_alpha()
-        agua_viva_small = pygame.transform.scale(agua_viva, (largura_agua, altura_agua))
+        agua_viva_small = pygame.transform.scale(agua_viva, (largura, altura))
 
         tubarao = pygame.image.load('imagens/shark03.png').convert_alpha()
         tubarao_grande = pygame.transform.scale(tubarao, (larg_tub, alt_tub))
@@ -142,7 +131,7 @@ while executando:
                 self.image = imgagens
                 self.rect = self.image.get_rect()
                 self.rect.x = 0
-                self.rect.y = random.randint(-100, WIDTH-altura)
+                self.rect.y = random.randint(-100, -altura)
                 self.speedx = 2
                 self.speedy = 0
 
