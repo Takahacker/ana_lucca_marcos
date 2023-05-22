@@ -134,8 +134,6 @@ while executando:
                 self.rect.y = random.randint(-100, -altura)
                 self.speedx = 2
                 self.speedy = 0
-                self.rect.top = altura
-                self.rect.bottom = -altura
 
             def update(self):
                 # Atualizando a posição do peixe
