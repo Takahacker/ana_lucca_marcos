@@ -18,6 +18,8 @@ VERDE = (0, 255, 0)
 # Posição e dimensões do botão em Pygame
 botao_largura = 100
 botao_altura = 100
+score1 = 0
+score2 = 0
 botao_posicao_x = (largura - botao_largura) // 2
 botao_posicao_y = (altura - botao_altura) // 2
 
@@ -159,6 +161,7 @@ while executando:
         all_sprites.add(player1)
         player1.rect.centerx = WIDTH / 3
         player1.rect.bottom = HEIGHT - 8
+
         all_sprites.add(player2)
         player2.rect.centerx = WIDTH / 2
         player2.rect.bottom = HEIGHT - 12
@@ -201,12 +204,12 @@ while executando:
 
             # Verifica se jogador encostou na parte superior da tela
             if player1.rect.top <= 0:
-                score += 1
+                score1 += 1
                 player1.rect.centerx = WIDTH / 3
                 player1.rect.bottom = HEIGHT - 8
 
             if player2.rect.top <= 0:
-                score += 1
+                score2 += 1
                 player2.rect.centerx = WIDTH / 2
                 player2.rect.bottom = HEIGHT - 15
 
@@ -218,8 +221,10 @@ while executando:
             all_sprites.draw(window)
 
             # Exibe a pontuação na tela
-            score_text = font.render("Pontuação: " + str(score), True, (255, 255, 255))
-            window.blit(score_text, (10, 10))
+            score1_text = font.render("Jogador 1: " + str(score1 ), True, (255, 255, 255))
+            window.blit(score1_text, (10, 10))
+            score2_text = font.render("Jogador 2: " + str(score2), True, (255, 255, 255))
+            window.blit(score2_text, (250, 10))
 
             pygame.display.update()
 
