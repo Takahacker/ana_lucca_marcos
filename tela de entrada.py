@@ -62,8 +62,13 @@ while executando:
         largura_agua = 40
         larg_tub = 130
         alt_tub = 90
+
         font = pygame.font.SysFont(None, 48)
         background = pygame.image.load('imagens/BACKGROUND.png').convert()
+
+        font = pygame.font.SysFont(None, 48)
+        background = pygame.image.load('imagens/fundo_mario.jpg').convert()
+
 
         font = pygame.font.SysFont(None, 48)
         background = pygame.image.load('imagens/fundo_mario.jpg').convert()
