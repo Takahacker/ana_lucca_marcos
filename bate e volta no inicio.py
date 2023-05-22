@@ -49,19 +49,15 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         if keys[self.keys['up']]:
             self.speedy = -3
-            self.speedx = 0
         elif keys[self.keys['down']]:
             self.speedy = 3
-            self.speedx = 0
         else:
             self.speedy = 0
 
         if keys[self.keys['left']]:
             self.speedx = -3
-            self.speedy = 0
         elif keys[self.keys['right']]:
             self.speedx = 3
-            self.speedy = 0
         else:
             self.speedx = 0
 
@@ -105,7 +101,7 @@ class Peixe(pygame.sprite.Sprite):
 
 # ----- Criação de objetos
 player1 = Player(player_image, {'up': pygame.K_w, 'down': pygame.K_s, 'left': pygame.K_a, 'right': pygame.K_d})
-player2 = Player(player_image, {'up': pygame.K_t, 'down': pygame.K_g, 'left': pygame.K_f, 'right': pygame.K_h})
+player2 = Player(player_image, {'up': pygame.K_t, 'down': pygame.K_f, 'left': pygame.K_g, 'right': pygame.K_h})
 
 all_peixes = pygame.sprite.Group()
 all_sprites = pygame.sprite.Group()

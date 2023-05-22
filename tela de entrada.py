@@ -60,8 +60,13 @@ while executando:
         altura = 60
         larg_tub = 130
         alt_tub = 90
+<<<<<<< HEAD
         font = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 48)
         background = pygame.image.load('imagens/BACKGROUND.png').convert()
+=======
+        font = pygame.font.SysFont(None, 48)
+        background = pygame.image.load('imagens/fundo_mario.jpg').convert()
+>>>>>>> 2d59d99a37f03458935351151d08506aaac7caca
 
         agua_viva = pygame.image.load('imagens/aguaviva_png.png').convert_alpha()
         agua_viva_small = pygame.transform.scale(agua_viva, (largura, altura))
@@ -134,6 +139,8 @@ while executando:
                 self.rect.y = random.randint(-100, -altura)
                 self.speedx = 2
                 self.speedy = 0
+                self.rect.top = altura
+                self.rect.bottom = -altura
 
             def update(self):
                 # Atualizando a posição do peixe
@@ -142,7 +149,7 @@ while executando:
 
                 # Se o peixe passar do final da tela, volta para cima e sorteia
                 # novas posições e velocidades
-                if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
+                if self.rect.top < 0 or self.rect.bottom > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
                     self.rect.x = 0
                     self.rect.y = random.randint(-100, HEIGHT - altura)
                     self.speedx = random.randint(2, 4)
