@@ -13,7 +13,7 @@ pygame.display.set_caption('Crossy Ocean')
 
 # ----- Inicia assets
 largura = 50
-altura = 38
+altura = 50
 larg_tub = 130
 alt_tub = 90
 font = pygame.font.SysFont(None, 48)
@@ -21,18 +21,11 @@ background = pygame.image.load('imagens/fundo_mario.jpg').convert()
 
 
 
-peixe1 = pygame.image.load('imagens/peixe1.png').convert_alpha()
-peixe1_small = pygame.transform.scale(peixe1, (largura, altura))
+agua_viva = pygame.image.load('imagens/aguaviva_png.png').convert_alpha()
+agua_viva_small = pygame.transform.scale(agua_viva, (largura, altura))
 
 tubarao = pygame.image.load('imagens/shark03.png').convert_alpha()
 tubarao_grande = pygame.transform.scale(tubarao, (larg_tub, alt_tub))
-
-
-
-lista_y = []
-lista_x = []
-lista_larg = []
-velocidade_peixes_x= []
 
 # ----- Inicia estruturas de dados
 
@@ -65,11 +58,11 @@ class Peixe(pygame.sprite.Sprite):
 
 all_peixes = pygame.sprite.Group()
 
-for i in range(6):
-    peixe1 = Peixe(peixe1_small)
+for i in range(2):
+    peixe1 = Peixe(agua_viva_small)
     all_peixes.add(peixe1)
 
-for i in range(4):
+for i in range(6):
     tubarao = Peixe(tubarao_grande)
     all_peixes.add(tubarao)
 
