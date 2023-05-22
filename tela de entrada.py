@@ -1,4 +1,6 @@
 import pygame
+import random
+
     
 # Inicialização do Pygame
 pygame.init()
@@ -42,9 +44,6 @@ while executando:
                                                   (botao_posicao_x + 30, botao_posicao_y + 80),
                                                   (botao_posicao_x + 80, botao_posicao_y + 50)])
     else:
-                # ----- Importa e inicia pacotes
-        import pygame
-        import random
 
         pygame.init()
 
@@ -60,7 +59,7 @@ while executando:
         larg_tub = 130
         alt_tub = 90
         font = pygame.font.SysFont(None, 48)
-        background = pygame.image.load('imagens/fundo_mario.jpg').convert()
+        background = pygame.image.load('imagens/BACKGROUND.png').convert()
 
         agua_viva = pygame.image.load('imagens/aguaviva_png.png').convert_alpha()
         agua_viva_small = pygame.transform.scale(agua_viva, (largura, altura))
