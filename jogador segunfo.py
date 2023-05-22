@@ -12,20 +12,20 @@ window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Crossy Ocean')
 
 # ----- Inicia assets
-largura = 50
-altura = 38
+largura = 80
+altura = 80
 larg_tub = 130
 alt_tub = 90
 font = pygame.font.SysFont(None, 48)
 background = pygame.image.load('imagens/fundo_mario.jpg').convert()
 
-peixe1 = pygame.image.load('imagens/peixe1.png').convert_alpha()
-peixe1_small = pygame.transform.scale(peixe1, (largura, altura))
+agua_viva = pygame.image.load('imagens/agua_viva.png').convert_alpha()
+agua_viva_small = pygame.transform.scale(agua_viva, (largura, altura))
 
 tubarao = pygame.image.load('imagens/shark03.png').convert_alpha()
 tubarao_grande = pygame.transform.scale(tubarao, (larg_tub, alt_tub))
 
-player_image = pygame.image.load('imagens/jogador2.png').convert_alpha()
+player_image = pygame.image.load('imagens/bob_esponja_direita.png').convert_alpha()
 player_image = pygame.transform.scale(player_image, (largura, altura))
 
 # ----- Inicia estruturas de dados
@@ -115,7 +115,7 @@ all_sprites.add(player1)
 all_sprites.add(player2)
 
 for i in range(6):
-    peixe1 = Peixe(peixe1_small)
+    peixe1 = Peixe(agua_viva_small)
     all_peixes.add(peixe1)
 
 for i in range(4):
