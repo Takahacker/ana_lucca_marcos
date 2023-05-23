@@ -178,18 +178,25 @@ while executando:
 
         clock = pygame.time.Clock()
         FPS = 60
-
+        current_time = 0
+        minutos = 0
+        segundos = 0
         # ===== Loop principal =====
         while game:
-            clock.tick(FPS)
-            
+            dt = clock.tick(FPS)
+            current_time += dt/1000
+
             # ----- Trata eventos
             for event in pygame.event.get():
                 # ----- Verifica consequências
                 if event.type == pygame.QUIT:
                     game = False
 
+            minutos = current_time//60000
+            segundos = (current_time%60000)//1000
+
             # ----- Atualiza estado do jogo
+
             all_sprites.update()
 
             # Verifica colisão entre os jogadores e os obstáculos
@@ -230,8 +237,16 @@ while executando:
             # Exibe a pontuação na tela
             score1_text = font.render("Jogador 1: " + str(score1), True, (255, 255, 255))
             window.blit(score1_text, (10, 10))
+
             score2_text = font.render("Jogador 2: " + str(score2), True, (255, 255, 255))
             window.blit(score2_text, (250, 10))
+
+            tempo_text = font.render("Tempo: {0:.1f}".format((current_time)), True, (255,255,255))
+            window.blit(tempo_text, (100,100))
+            
+            
+            if current_time == 60000:
+                game = False
 
             pygame.display.update()
 
