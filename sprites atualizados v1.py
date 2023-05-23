@@ -1,9 +1,7 @@
 import pygame
 import random
-import sprites
-import assets
-import configuracoes
-
+import sprites 
+    
 # Inicialização do Pygame
 pygame.init()
 
