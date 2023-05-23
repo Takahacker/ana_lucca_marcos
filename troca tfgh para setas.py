@@ -60,8 +60,8 @@ while executando:
         altura = 60
         larg_tub = 130
         alt_tub = 90
-        font = pygame.font.SysFont(None, 48)
-        background = pygame.image.load('imagens/BACKGROUND.png').convert()
+        font = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 48)
+        background = pygame.image.load('imagens/fundo_mario.jpg').convert()
 
         agua_viva = pygame.image.load('imagens/aguaviva_png.png').convert_alpha()
         agua_viva_small = pygame.transform.scale(agua_viva, (largura, altura))
@@ -74,8 +74,7 @@ while executando:
 
         # ----- Inicia estruturas de dados
         game = True
-        score1 = 0
-        score2 = 0 
+        score = 0
 
         class Player(pygame.sprite.Sprite):
             def __init__(self, imagens, keys):
@@ -151,9 +150,10 @@ while executando:
 
         # ----- Criação de objetos
         player1 = Player(player_image, {'up': pygame.K_w, 'down': pygame.K_s, 'left': pygame.K_a, 'right': pygame.K_d})
-        player2 = Player(player_image, {'up': pygame.K_t, 'down': pygame.K_g, 'left': pygame.K_f, 'right': pygame.K_h})
+        player2 = Player(player_image, {'up': pygame.K_UP, 'down': pygame.K_DOWN, 'left': pygame.K_LEFT, 'right': pygame.K_RIGHT})
 
-        all_peixes = pygame.sprite.Group()
+        all_tubaroes = pygame.sprite.Group()
+        all_aguas_vivas = pygame.sprite.Group()
         all_sprites = pygame.sprite.Group()
 
         # Adiciona jogadores ao grupo de sprites
@@ -166,12 +166,12 @@ while executando:
         player2.rect.bottom = HEIGHT - 12
 
         for i in range(6):
-            peixe1 = Peixe(agua_viva_small)
-            all_peixes.add(peixe1)
+            agua_viva1 = Peixe(agua_viva_small)
+            all_aguas_vivas.add(agua_viva1)
 
-        for i in range(4):
+        for i in range(2):
             tubarao = Peixe(tubarao_grande)
-            all_peixes.add(tubarao)
+            all_tubaroes.add(tubarao)
 
         clock = pygame.time.Clock()
         FPS = 30
@@ -190,40 +190,45 @@ while executando:
             all_sprites.update()
 
             # Verifica colisão entre os jogadores e os obstáculos
-            if pygame.sprite.spritecollide(player1, all_peixes, False):
+            if pygame.sprite.spritecollide(player1, all_tubaroes, False):
                 player1.rect.centerx = WIDTH / 3
                 player1.rect.bottom = HEIGHT - 8
+                score1 = 0
 
-            if pygame.sprite.spritecollide(player2, all_peixes, False):
+            if pygame.sprite.spritecollide(player2, all_tubaroes, False):
                 player2.rect.centerx = WIDTH / 2
                 player2.rect.bottom = HEIGHT - 15
-
-            for peixe in all_peixes:
-                peixe.update()
-
-            # Verifica se jogador encostou na parte superior da tela
-            if player1.rect.top <= 0:
+                score2 = 0
+            
+            if pygame.sprite.spritecollide(player1, all_aguas_vivas, True):
                 score1 += 1
-                player1.rect.centerx = WIDTH / 3
-                player1.rect.bottom = HEIGHT - 8
+                agua_viva1 = Peixe(agua_viva_small)
+                all_aguas_vivas.add(agua_viva1)
 
-            if player2.rect.top <= 0:
+            if pygame.sprite.spritecollide(player2, all_aguas_vivas, True):
                 score2 += 1
-                player2.rect.centerx = WIDTH / 2
-                player2.rect.bottom = HEIGHT - 15
+                agua_viva1 = Peixe(agua_viva_small)
+                all_aguas_vivas.add(agua_viva1)
+
+            for tubarao in all_tubaroes:
+                tubarao.update()
+            
+            for aguaviva in all_aguas_vivas:
+                aguaviva.update()
 
             # ----- Gera saídas
             window.fill((0, 0, 0))  # Preenche com a cor preta
             window.blit(background, (0, 0))
 
-            all_peixes.draw(window)
+            all_tubaroes.draw(window)
+            all_aguas_vivas.draw(window)
             all_sprites.draw(window)
 
             # Exibe a pontuação na tela
-            score_text = font.render("Jogador 1: " + str(score1), True, (255, 255, 255))
-            window.blit(score_text, (10, 10))
-            score_text2 = font.render("Jogador 2: " + str(score2), True, (255, 255, 255))
-            window.blit(score_text2, (220, 10))
+            score1_text = font.render("Jogador 1: " + str(score1), True, (255, 255, 255))
+            window.blit(score1_text, (10, 10))
+            score2_text = font.render("Jogador 2: " + str(score2), True, (255, 255, 255))
+            window.blit(score2_text, (250, 10))
 
             pygame.display.update()
 
