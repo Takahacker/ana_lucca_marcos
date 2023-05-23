@@ -220,8 +220,10 @@ while executando:
             all_sprites.draw(window)
 
             # Exibe a pontuação na tela
-            score_text = font.render("Pontuação: " + str(score), True, (255, 255, 255))
+            score_text = font.render("Jogador 1: " + str(score1), True, (255, 255, 255))
             window.blit(score_text, (10, 10))
+            score_text2 = font.render("Jogador 2: " + str(score2), True, (255, 255, 255))
+            window.blit(score_text2, (220, 10))
 
             pygame.display.update()
 
