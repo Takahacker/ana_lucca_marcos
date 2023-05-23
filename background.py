@@ -14,7 +14,7 @@ pygame.display.set_caption('Hello World!')
 game = True
 
 # ----- Inicia assets
-image = pygame.image.load('imagens/fundo_mario.jpg').convert()
+image = pygame.image.load('ana_lucca_marcos-1/imagens/fundo_mario.jpg').convert()
 image = pygame.transform.scale(image, (500, 400))
 # ===== Loop principal =====
 while game:
