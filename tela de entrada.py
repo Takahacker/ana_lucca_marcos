@@ -60,8 +60,8 @@ while executando:
         altura = 60
         larg_tub = 130
         alt_tub = 90
-        font = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 48)
-        background = pygame.image.load('imagens/fundo_mario.jpg').convert()
+        font = pygame.font.SysFont(None, 48)
+        background = pygame.image.load('imagens/BACKGROUND.png').convert()
 
         agua_viva = pygame.image.load('imagens/aguaviva_png.png').convert_alpha()
         agua_viva_small = pygame.transform.scale(agua_viva, (largura, altura))
@@ -74,7 +74,8 @@ while executando:
 
         # ----- Inicia estruturas de dados
         game = True
-        score = 0
+        score1 = 0
+        score2 = 0 
 
         class Player(pygame.sprite.Sprite):
             def __init__(self, imagens, keys):
@@ -219,10 +220,10 @@ while executando:
             all_sprites.draw(window)
 
             # Exibe a pontuação na tela
-            score1_text = font.render("Jogador 1: " + str(score1 ), True, (255, 255, 255))
-            window.blit(score1_text, (10, 10))
-            score2_text = font.render("Jogador 2: " + str(score2), True, (255, 255, 255))
-            window.blit(score2_text, (250, 10))
+            score_text = font.render("Jogador 1: " + str(score1), True, (255, 255, 255))
+            window.blit(score_text, (10, 10))
+            score_text2 = font.render("Jogador 2: " + str(score2), True, (255, 255, 255))
+            window.blit(score_text2, (220, 10))
 
             pygame.display.update()
 
