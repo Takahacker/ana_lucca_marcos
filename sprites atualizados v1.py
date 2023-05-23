@@ -3,7 +3,7 @@ import random
 import sprites
 import assets
 import configuracoes
-    
+
 # Inicialização do Pygame
 pygame.init()
 
