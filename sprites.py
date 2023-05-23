@@ -1,7 +1,7 @@
 import random
 import pygame
 from configuracoes import WIDTH, HEIGHT, largura, altura, larg_tub, alt_tub
-from assets import FONTE, BACKGROUND, AGUA_VIVA, TUBARAO, JOGADOR
+from assets import FONTE, BACKGROUND, AGUA_VIVA, TUBARAO, BOB_ESPONJA,  PATRICK
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, imagens, keys):

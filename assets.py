@@ -6,7 +6,8 @@ FONTE = 'font'
 BACKGROUND = 'background'
 AGUA_VIVA = 'agua_viva'
 TUBARAO = 'tubarao' 
-JOGADOR = 'player_image'
+BOB_ESPONJA = 'player_image'
+PATRICK = 'player_image2'
 
 def load_assets():
     imagens = {}
@@ -16,7 +17,9 @@ def load_assets():
     imagens[AGUA_VIVA] = pygame.transform.scale(imagens['agua_viva'], (largura, altura))
     imagens[TUBARAO] = pygame.image.load('imagens/shark03.png').convert_alpha()
     imagens[TUBARAO] = pygame.transform.scale(imagens['tubarao'], (larg_tub, alt_tub))
-    imagens[JOGADOR] = pygame.image.load('imagens/bob_esponja_direita.png').convert_alpha()
-    imagens[JOGADOR] = pygame.transform.scale(imagens['player_image'], (largura, altura))
+    imagens[BOB_ESPONJA] = pygame.image.load('imagens/bob_esponja_direita.png').convert_alpha()
+    imagens[BOB_ESPONJA] = pygame.transform.scale(imagens['player_image'], (largura, altura))
+    imagens[PATRICK] = pygame.image.load('imagens/patrick.png').convert_alpha()
+    imagens[PATRICK] = pygame.transform.scale(imagens[PATRICK], (largura, altura))
 
     return imagens
