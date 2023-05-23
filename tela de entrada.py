@@ -18,6 +18,8 @@ VERDE = (0, 255, 0)
 # Posição e dimensões do botão em Pygame
 botao_largura = 100
 botao_altura = 100
+score1 = 0
+score2 = 0
 botao_posicao_x = (largura - botao_largura) // 2
 botao_posicao_y = (altura - botao_altura) // 2
 
@@ -59,7 +61,7 @@ while executando:
         larg_tub = 130
         alt_tub = 90
         font = pygame.font.SysFont(None, 48)
-        background = pygame.image.load('imagens/fundo_mario.jpg').convert()
+        background = pygame.image.load('imagens/BACKGROUND.png').convert()
 
         agua_viva = pygame.image.load('imagens/aguaviva_png.png').convert_alpha()
         agua_viva_small = pygame.transform.scale(agua_viva, (largura, altura))
@@ -141,7 +143,7 @@ while executando:
 
                 # Se o peixe passar do final da tela, volta para cima e sorteia
                 # novas posições e velocidades
-                if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
+                if self.rect.top < 0 or self.rect.bottom > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
                     self.rect.x = 0
                     self.rect.y = random.randint(-100, HEIGHT - altura)
                     self.speedx = random.randint(2, 4)
@@ -158,6 +160,7 @@ while executando:
         all_sprites.add(player1)
         player1.rect.centerx = WIDTH / 3
         player1.rect.bottom = HEIGHT - 8
+
         all_sprites.add(player2)
         player2.rect.centerx = WIDTH / 2
         player2.rect.bottom = HEIGHT - 12
@@ -217,10 +220,8 @@ while executando:
             all_sprites.draw(window)
 
             # Exibe a pontuação na tela
-            score_text = font.render("Jogador 1: " + str(score1), True, (255, 255, 255))
+            score_text = font.render("Pontuação: " + str(score), True, (255, 255, 255))
             window.blit(score_text, (10, 10))
-            score_text2 = font.render("Jogador 2: " + str(score2), True, (255, 255, 255))
-            window.blit(score_text2, (250, 10))
 
             pygame.display.update()
 
