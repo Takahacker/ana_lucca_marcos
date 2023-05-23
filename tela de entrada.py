@@ -59,7 +59,7 @@ while executando:
         larg_tub = 130
         alt_tub = 90
         font = pygame.font.SysFont(None, 48)
-        background = pygame.image.load('imagens/BACKGROUND.png').convert()
+        background = pygame.image.load('imagens/fundo_mario.jpg').convert()
 
         agua_viva = pygame.image.load('imagens/aguaviva_png.png').convert_alpha()
         agua_viva_small = pygame.transform.scale(agua_viva, (largura, altura))
@@ -72,7 +72,8 @@ while executando:
 
         # ----- Inicia estruturas de dados
         game = True
-        score = 0
+        score1 = 0
+        score2 = 0 
 
         class Player(pygame.sprite.Sprite):
             def __init__(self, imagens, keys):
@@ -199,12 +200,12 @@ while executando:
 
             # Verifica se jogador encostou na parte superior da tela
             if player1.rect.top <= 0:
-                score += 1
+                score1 += 1
                 player1.rect.centerx = WIDTH / 3
                 player1.rect.bottom = HEIGHT - 8
 
             if player2.rect.top <= 0:
-                score += 1
+                score2 += 1
                 player2.rect.centerx = WIDTH / 2
                 player2.rect.bottom = HEIGHT - 15
 
@@ -216,8 +217,10 @@ while executando:
             all_sprites.draw(window)
 
             # Exibe a pontuação na tela
-            score_text = font.render("Pontuação: " + str(score), True, (255, 255, 255))
+            score_text = font.render("Jogador 1: " + str(score1), True, (255, 255, 255))
             window.blit(score_text, (10, 10))
+            score_text2 = font.render("Jogador 2: " + str(score2), True, (255, 255, 255))
+            window.blit(score_text2, (250, 10))
 
             pygame.display.update()
 
