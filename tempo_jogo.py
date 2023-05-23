@@ -245,7 +245,7 @@ while executando:
             window.blit(tempo_text, (100,100))
             
             
-            if current_time == 60000:
+            if current_time >= 6000:
                 game = False
 
             pygame.display.update()
