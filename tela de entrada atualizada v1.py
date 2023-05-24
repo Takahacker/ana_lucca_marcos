@@ -18,7 +18,8 @@ larg_tub = 130
 alt_tub = 90
 font = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 48)
 font_small = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 24)
-background = pygame.image.load('imagens/fundo_mario.jpg').convert()
+background = pygame.image.load('imagens/Image nova.jpg').convert()
+background = pygame.transform.scale(background,(WIDTH,HEIGHT))
 
 agua_viva = pygame.image.load('imagens/AGUAVIVA.png').convert_alpha()
 agua_viva_small = pygame.transform.scale(agua_viva, (largura_agua_viva, altura_agua_viva))
