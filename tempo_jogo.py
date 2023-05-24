@@ -46,9 +46,6 @@ while executando:
                                                   (botao_posicao_x + 30, botao_posicao_y + 80),
                                                   (botao_posicao_x + 80, botao_posicao_y + 50)])
     else:
-
-        pygame.init()
-
         # ----- Gera tela principal
         WIDTH = 600
         HEIGHT = 600
@@ -61,18 +58,18 @@ while executando:
         larg_tub = 130
         alt_tub = 90
         font = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 48)
-        background = pygame.image.load('imagens/fundo_mario.jpg').convert()
+        background = pygame.image.load('ana_lucca_marcos-1/imagens/fundo_mario.jpg').convert()
 
-        agua_viva = pygame.image.load('imagens/AGUAVIVA.png').convert_alpha()
+        agua_viva = pygame.image.load('ana_lucca_marcos-1/imagens/AGUAVIVA.png').convert_alpha()
         agua_viva_small = pygame.transform.scale(agua_viva, (largura, altura))
 
-        tubarao = pygame.image.load('imagens/holandes.png').convert_alpha()
+        tubarao = pygame.image.load('ana_lucca_marcos-1/imagens/holandes.png').convert_alpha()
         tubarao_grande = pygame.transform.scale(tubarao, (larg_tub, alt_tub))
 
-        player_image1 = pygame.image.load('imagens/bob_esponja_direita.png').convert_alpha()
+        player_image1 = pygame.image.load('ana_lucca_marcos-1/imagens/bob_esponja_direita.png').convert_alpha()
         player_image1 = pygame.transform.scale(player_image1, (largura, altura))
 
-        player_image2 = pygame.image.load('imagens/patrick.png').convert_alpha()
+        player_image2 = pygame.image.load('ana_lucca_marcos-1/imagens/patrick.png').convert_alpha()
         player_image2 = pygame.transform.scale(player_image2, (largura, altura))
 
         # ----- Inicia estruturas de dados
@@ -176,24 +173,38 @@ while executando:
             tubarao = Peixe(tubarao_grande)
             all_tubaroes.add(tubarao)
 
+        #Estabelece variáveis que servirão para contar tempo
+
+        import time
         clock = pygame.time.Clock()
+        #atualiza a tela 60 vezes por segundo
         FPS = 60
         current_time = 0
-        minutos = 0
-        segundos = 0
+        tempo = 0
+        start_time = time.time()
+        time_started = False
+        tempo_restante = 0
+
         # ===== Loop principal =====
         while game:
-            dt = clock.tick(FPS)
-            current_time += dt/1000
+            clock.tick(FPS)
+            current_time = time.time() - start_time
+            
+            if current_time>=1 and not time_started:
+                time_started = True
+                start_time = time.time()
 
+            if time_started:
+                if current_time >= 60:
+                    game = False
+       
+            
             # ----- Trata eventos
             for event in pygame.event.get():
                 # ----- Verifica consequências
                 if event.type == pygame.QUIT:
                     game = False
 
-            minutos = current_time//60000
-            segundos = (current_time%60000)//1000
 
             # ----- Atualiza estado do jogo
 
@@ -240,20 +251,15 @@ while executando:
 
             score2_text = font.render("Jogador 2: " + str(score2), True, (255, 255, 255))
             window.blit(score2_text, (250, 10))
-
-            tempo_text = font.render("Tempo: {0:.1f}".format((current_time)), True, (255,255,255))
-            window.blit(tempo_text, (100,100))
             
-            
-            if current_time >= 6000:
-                game = False
 
+            if current_time >= 55:
+                tempo_restante = 60 - current_time
+                tempo_text = font.render("Tempo restante: {0:.0f}".format((tempo_restante)), True, (255,255,255))
+                window.blit(tempo_text, (100,100))     
             pygame.display.update()
 
-        # ===== Finalização =====
-        pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
-
+        # ===== Finalização =====a
+        # Encerrando o Pygame
+        pygame.quit()
     pygame.display.update()
-
-# Encerrando o Pygame
-pygame.quit()
