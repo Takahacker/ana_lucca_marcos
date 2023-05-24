@@ -50,8 +50,8 @@ while executando:
         pygame.init()
 
         # ----- Gera tela principal
-        WIDTH = 600
-        HEIGHT = 600
+        WIDTH = 1200
+        HEIGHT = 1200
         window = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('Crossy Ocean')
 
@@ -61,7 +61,7 @@ while executando:
         larg_tub = 130
         alt_tub = 90
         font = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 48)
-        background = pygame.image.load('imagens/fundo_mario.jpg').convert()
+        background = pygame.image.load('imagens/image nova.jpg').convert()
 
         agua_viva = pygame.image.load('imagens/AGUAVIVA.png').convert_alpha()
         agua_viva_small = pygame.transform.scale(agua_viva, (largura, altura))

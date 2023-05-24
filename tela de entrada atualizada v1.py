@@ -24,10 +24,10 @@ agua_viva_small = pygame.transform.scale(agua_viva, (largura, altura))
 tubarao = pygame.image.load('imagens/holandes.png').convert_alpha()
 tubarao_grande = pygame.transform.scale(tubarao, (larg_tub, alt_tub))
 
-player_image1 = pygame.image.load('imagens/bob_esponja_direita.png').convert_alpha()
+player_image1 = pygame.image.load('imagens/bob_esponja_com_rede.png').convert_alpha()
 player_image1 = pygame.transform.scale(player_image1, (largura, altura))
 
-player_image2 = pygame.image.load('imagens/patrick.png').convert_alpha()
+player_image2 = pygame.image.load('imagens/patrick_com_rede.png').convert_alpha()
 player_image2 = pygame.transform.scale(player_image2, (largura, altura))
 
 # ----- Inicia estruturas de dados
