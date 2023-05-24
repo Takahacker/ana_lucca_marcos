@@ -195,8 +195,7 @@ while executando:
                 start_time = time.time()
 
             if time_started:
-
-                if start_time >= 60000:
+                if current_time >= 60:
                     game = False
        
             
@@ -252,14 +251,15 @@ while executando:
 
             score2_text = font.render("Jogador 2: " + str(score2), True, (255, 255, 255))
             window.blit(score2_text, (250, 10))
+            
 
-            if start_time >= 55000:
-                tempo_restante = 60000 - start_time
-                tempo_text = font.render("Tempo restante: {0}".format((tempo_restante)), True, (255,255,255))
+            if current_time >= 55:
+                tempo_restante = 60 - current_time
+                tempo_text = font.render("Tempo restante: {0:.0f}".format((tempo_restante)), True, (255,255,255))
                 window.blit(tempo_text, (100,100))     
             pygame.display.update()
 
         # ===== Finalização =====a
         # Encerrando o Pygame
-            pygame.quit()
+        pygame.quit()
     pygame.display.update()
