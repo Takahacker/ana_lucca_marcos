@@ -10,8 +10,10 @@ window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Crossy Ocean')
 
 # ----- Inicia assets
-largura = 60
-altura = 60
+largura_agua_viva = 60
+altura_agua_viva = 60
+largura_player = 80
+altura_player = 80
 larg_tub = 130
 alt_tub = 90
 font = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 48)
@@ -19,16 +21,16 @@ font_small = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.
 background = pygame.image.load('imagens/fundo_mario.jpg').convert()
 
 agua_viva = pygame.image.load('imagens/AGUAVIVA.png').convert_alpha()
-agua_viva_small = pygame.transform.scale(agua_viva, (largura, altura))
+agua_viva_small = pygame.transform.scale(agua_viva, (largura_agua_viva, altura_agua_viva))
 
 tubarao = pygame.image.load('imagens/holandes.png').convert_alpha()
 tubarao_grande = pygame.transform.scale(tubarao, (larg_tub, alt_tub))
 
 player_image1 = pygame.image.load('imagens/bob_esponja_com_rede.png').convert_alpha()
-player_image1 = pygame.transform.scale(player_image1, (largura, altura))
+player_image1 = pygame.transform.scale(player_image1, (largura_player, altura_player))
 
 player_image2 = pygame.image.load('imagens/patrick_com_rede.png').convert_alpha()
-player_image2 = pygame.transform.scale(player_image2, (largura, altura))
+player_image2 = pygame.transform.scale(player_image2, (largura_player, altura_player))
 
 # ----- Inicia estruturas de dados
 game = True
@@ -82,16 +84,16 @@ class Player(pygame.sprite.Sprite):
         if self.rect.top < 0:
             self.rect.top = 0
 
-class Peixe(pygame.sprite.Sprite):
+class AGUA_VIVA(pygame.sprite.Sprite):
     def __init__(self, imgagens):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
 
         self.image = imgagens
-        self.rect = self.image.get_rect()
-        self.rect.x = 0
-        self.rect.y = random.randint(-100, -altura)
-        self.speedx = 2
+        self.rect = pygame.Rect(0, 0, largura_agua_viva, altura_agua_viva)
+        self.rect.x = random.randint(-100,-50)
+        self.rect.bottom = random.randint(0, HEIGHT-100)
+        self.speedx = random.randint(2, 6)
         self.speedy = 0
 
     def update(self):
@@ -101,10 +103,35 @@ class Peixe(pygame.sprite.Sprite):
 
         # Se o peixe passar do final da tela, volta para cima e sorteia
         # novas posições e velocidades
-        if self.rect.top < 0 or self.rect.bottom > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
-            self.rect.x = 0
-            self.rect.y = random.randint(-100, HEIGHT - altura)
-            self.speedx = random.randint(2, 4)
+        if self.rect.top < 0 or self.rect.bottom > HEIGHT or self.rect.left > WIDTH:
+            self.rect.x = -100
+            self.rect.bottom = random.randint(0, HEIGHT-100)
+            self.speedx = random.randint(2, 6)
+            self.speedy = 0
+
+class HOLANDES(pygame.sprite.Sprite):
+    def __init__(self, imgagens):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = imgagens
+        self.rect = pygame.Rect(0, 0, 110, 65)
+        self.rect.x = random.randint(-100,-50)
+        self.rect.bottom = random.randint(0, HEIGHT-100)
+        self.speedx = random.randint(2, 6)
+        self.speedy = 0
+
+    def update(self):
+        # Atualizando a posição do peixe
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+
+        # Se o peixe passar do final da tela, volta para cima e sorteia
+        # novas posições e velocidades
+        if self.rect.top < 0 or self.rect.bottom > HEIGHT or self.rect.left > WIDTH:
+            self.rect.x = -100
+            self.rect.bottom = random.randint(0, HEIGHT-100)
+            self.speedx = random.randint(2, 6)
             self.speedy = 0
 
 # ----- Criação de objetos
@@ -125,11 +152,11 @@ player2.rect.centerx = WIDTH / 2
 player2.rect.bottom = HEIGHT - 12
 
 for i in range(6):
-    agua_viva1 = Peixe(agua_viva_small)
+    agua_viva1 = AGUA_VIVA(agua_viva_small)
     all_aguas_vivas.add(agua_viva1)
 
 for i in range(2):
-    tubarao = Peixe(tubarao_grande)
+    tubarao = HOLANDES(tubarao_grande)
     all_tubaroes.add(tubarao)
 
 clock = pygame.time.Clock()
@@ -204,12 +231,12 @@ while executando:
             
             if pygame.sprite.spritecollide(player1, all_aguas_vivas, True):
                 score1 += 1
-                agua_viva1 = Peixe(agua_viva_small)
+                agua_viva1 = AGUA_VIVA(agua_viva_small)
                 all_aguas_vivas.add(agua_viva1)
 
             if pygame.sprite.spritecollide(player2, all_aguas_vivas, True):
                 score2 += 1
-                agua_viva1 = Peixe(agua_viva_small)
+                agua_viva1 = AGUA_VIVA(agua_viva_small)
                 all_aguas_vivas.add(agua_viva1)
 
             for tubarao in all_tubaroes:
