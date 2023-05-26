@@ -75,6 +75,9 @@ while executando:
         player_image2 = pygame.image.load('ana_lucca_marcos-1/imagens/patrick.png').convert_alpha()
         player_image2 = pygame.transform.scale(player_image2, (largura, altura))
 
+        bolha = pygame.image.load('imagens/bolha.png').convert_alpha()  
+        bolha = pygame.transform.scale(bolha, (largura, altura))
+
         # ----- Inicia estruturas de dados
         game = True
         score = 0
