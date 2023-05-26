@@ -32,6 +32,9 @@ background_holandes = pygame.transform.scale(background_holandes,(WIDTH,HEIGHT))
 agua_viva = pygame.image.load('imagens/AGUAVIVA.png').convert_alpha()
 agua_viva_small = pygame.transform.scale(agua_viva, (largura_agua_viva, altura_agua_viva))
 
+plankton = pygame.image.load('imagens/pp.png').convert_alpha()
+
+
 tubarao = pygame.image.load('imagens/holandes.png').convert_alpha()
 tubarao_grande = pygame.transform.scale(tubarao, (larg_tub, alt_tub))
 
@@ -168,6 +171,10 @@ for i in range(2):
     tubarao = HOLANDES(tubarao_grande)
     all_tubaroes.add(tubarao)
 
+for i in range(2):
+    PLANKTON = HOLANDES(plankton)
+    all_tubaroes.add(PLANKTON)
+
 clock = pygame.time.Clock()
 FPS = 60
 
@@ -268,6 +275,9 @@ while executando:
             
             for aguaviva in all_aguas_vivas:
                 aguaviva.update()
+
+            for PLANKTON in all_tubaroes:
+                PLANKTON.update()
 
             # ----- Gera saídas
             window.fill((0, 0, 0))  # Preenche com a cor preta
