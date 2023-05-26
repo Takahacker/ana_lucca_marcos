@@ -46,10 +46,6 @@ player_image2 = pygame.transform.scale(player_image2, (largura_player, altura_pl
 # Carrega os sons do jogo
 pygame.mixer.music.load('assets/snd/tgfcoder-FrozenJam-SeamlessLoop.ogg')
 pygame.mixer.music.set_volume(0.4)
-boom_sound = pygame.mixer.Sound('assets/snd/expl3.wav')
-destroy_sound = pygame.mixer.Sound('assets/snd/expl6.wav')
-pew_sound = pygame.mixer.Sound('assets/snd/pew.wav')
-
 # ----- Inicia estruturas de dados
 game = True
 score1 = 0
