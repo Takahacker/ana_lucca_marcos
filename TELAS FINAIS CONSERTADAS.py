@@ -231,6 +231,7 @@ while executando:
 
         # ===== Loop principal =====
         while game:
+            
             clock.tick(FPS)
 
             current_time = time.time() - start_time
