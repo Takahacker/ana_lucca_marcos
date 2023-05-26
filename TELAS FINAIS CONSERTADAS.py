@@ -210,6 +210,7 @@ while executando:
     if not botao_clicado:
         janela.blit(estamos,(botao_posicao_x + 12, botao_posicao_y + 25))
         janela.blit(capitao,(botao_posicao_x + 12, botao_posicao_y + 55))
+        pygame.display.update()
     else:
 
         clock = pygame.time.Clock()
@@ -289,28 +290,30 @@ while executando:
                 window.blit(tempo_text, (270, 10)) 
 
                 if current_time >= 60:
-                    if score1>score2:
-                        window.fill((0, 0, 0))  # Preenche com a cor preta
-                        bob_text = font.render("Jogador 1 venceu! ", True, (PRETO))
-                        window.blit(background_bob, (0, 0)) 
-                        window.blit(bob_text, (10, 10))                   
-                    elif score2>score1:
-                        window.fill((0, 0, 0))  # Preenche com a cor preta
-                        pat_text = font.render("Jogador 2 venceu! ", True, (PRETO))   
-                        window.blit(background_patrick, (0, 0))
-                        window.blit(pat_text, (10, 10))
-                    else:
-                        window.fill((0, 0, 0))  # Preenche com a cor preta
-                        holandes_text = font.render("O holandes voador venceu =( ", True, (BRANCO))
-                        window.blit(background_holandes, (0, 0))
-                        window.blit(holandes_text, (10, 10))   
+                    game = False
+                    executando = False 
 
             pygame.display.update()
 
-        # ===== Finalização =====
-        pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
+tela_final = True
+while tela_final:
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            tela_final = False
+    if score1>score2:
+        window.fill((0, 0, 0))  # Preenche com a cor preta
+        bob_text = font.render("Jogador 1 venceu! ", True, (PRETO))
+        window.blit(background_bob, (0, 0)) 
+        window.blit(bob_text, (10, 10))                   
+    elif score2>score1:
+        window.fill((0, 0, 0))  # Preenche com a cor preta
+        pat_text = font.render("Jogador 2 venceu! ", True, (PRETO))   
+        window.blit(background_patrick, (0, 0))
+        window.blit(pat_text, (10, 10))
+    else:
+        window.fill((0, 0, 0))  # Preenche com a cor preta
+        holandes_text = font.render("O holandes voador venceu =( ", True, (BRANCO))
+        window.blit(background_holandes, (0, 0))
+        window.blit(holandes_text, (10, 10))   
 
     pygame.display.update()
-
-# Encerrando o Pygame
-pygame.quit()
