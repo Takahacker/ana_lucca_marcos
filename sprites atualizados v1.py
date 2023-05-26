@@ -50,8 +50,8 @@ while executando:
         pygame.init()
 
         # ----- Gera tela principal
-        WIDTH = 1200
-        HEIGHT = 1200
+        WIDTH = 900
+        HEIGHT = 700
         window = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('Crossy Ocean')
 
@@ -61,18 +61,18 @@ while executando:
         larg_tub = 130
         alt_tub = 90
         font = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 48)
-        background = pygame.image.load('imagens/image nova.jpg').convert()
+        background = pygame.image.load('ana_lucca_marcos-1/imagens/image nova.jpg').convert()
 
-        agua_viva = pygame.image.load('imagens/AGUAVIVA.png').convert_alpha()
+        agua_viva = pygame.image.load('ana_lucca_marcos-1/imagens/AGUAVIVA.png').convert_alpha()
         agua_viva_small = pygame.transform.scale(agua_viva, (largura, altura))
 
-        tubarao = pygame.image.load('imagens/holandes.png').convert_alpha()
+        tubarao = pygame.image.load('ana_lucca_marcos-1/imagens/holandes.png').convert_alpha()
         tubarao_grande = pygame.transform.scale(tubarao, (larg_tub, alt_tub))
 
-        player_image1 = pygame.image.load('imagens/bob_esponja_direita.png').convert_alpha()
+        player_image1 = pygame.image.load('ana_lucca_marcos-1/imagens/bob_esponja_direita.png').convert_alpha()
         player_image1 = pygame.transform.scale(player_image1, (largura, altura))
 
-        player_image2 = pygame.image.load('imagens/patrick.png').convert_alpha()
+        player_image2 = pygame.image.load('ana_lucca_marcos-1/imagens/patrick.png').convert_alpha()
         player_image2 = pygame.transform.scale(player_image2, (largura, altura))
 
         bolha = pygame.image.load('imagens/bolha.png').convert_alpha()  
