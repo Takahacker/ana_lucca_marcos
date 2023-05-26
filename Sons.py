@@ -46,6 +46,9 @@ player_image2 = pygame.transform.scale(player_image2, (largura_player, altura_pl
 # Carrega os sons do jogo
 pygame.mixer.music.set_volume(0.4)
 musica = pygame.mixer.Sound('musica.mp3')
+som_agua_viva = pygame.mixer.Sound('somag.mp3')
+boom = pygame.mixer.Sound('boom.mp3')
+heheheha = pygame.mixer.Sound('heheheha.mp3')
 # ----- Inicia estruturas de dados
 game = True
 score1 = 0
@@ -249,21 +252,27 @@ while executando:
 
             # Verifica colisão entre os jogadores e os obstáculos
             if pygame.sprite.spritecollide(player1, all_tubaroes, False):
+                boom.play()
+                heheheha.play()
                 player1.rect.centerx = WIDTH / 3
                 player1.rect.bottom = HEIGHT - 8
                 score1 = 0
 
             if pygame.sprite.spritecollide(player2, all_tubaroes, False):
+                boom.play()
+                heheheha.play()
                 player2.rect.centerx = WIDTH / 2
                 player2.rect.bottom = HEIGHT - 15
                 score2 = 0
             
             if pygame.sprite.spritecollide(player1, all_aguas_vivas, True):
+                som_agua_viva.play()
                 score1 += 1
                 agua_viva1 = AGUA_VIVA(agua_viva_small)
                 all_aguas_vivas.add(agua_viva1)
 
             if pygame.sprite.spritecollide(player2, all_aguas_vivas, True):
+                som_agua_viva.play()
                 score2 += 1
                 agua_viva1 = AGUA_VIVA(agua_viva_small)
                 all_aguas_vivas.add(agua_viva1)
@@ -301,6 +310,7 @@ while executando:
 
             pygame.display.update()
 
+pygame.mixer.stop()
 tela_final = True
 while tela_final:
     for evento in pygame.event.get():
