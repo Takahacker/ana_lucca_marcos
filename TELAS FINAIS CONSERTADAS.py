@@ -1,5 +1,6 @@
 import pygame
 import random
+import time
 
 pygame.init()
 
@@ -19,10 +20,14 @@ alt_tub = 90
 font = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 48)
 font_small = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 24)
 background = pygame.image.load('imagens/Image nova.jpg').convert()
+background = pygame.transform.scale(background,(WIDTH,HEIGHT))
 
 background_bob = pygame.image.load('imagens/ganhador1.jpeg').convert()
+background_bob = pygame.transform.scale(background_bob,(WIDTH,HEIGHT))
 background_patrick = pygame.image.load('imagens/ganhador2.jpeg').convert()
+background_patrick = pygame.transform.scale(background_patrick,(WIDTH,HEIGHT))
 background_holandes = pygame.image.load('imagens/holandes_ganhador.jpeg').convert()
+background_holandes = pygame.transform.scale(background_holandes,(WIDTH,HEIGHT))
 
 agua_viva = pygame.image.load('imagens/AGUAVIVA.png').convert_alpha()
 agua_viva_small = pygame.transform.scale(agua_viva, (largura_agua_viva, altura_agua_viva))
@@ -35,8 +40,6 @@ player_image1 = pygame.transform.scale(player_image1, (largura_player, altura_pl
 
 player_image2 = pygame.image.load('imagens/patrick_com_rede.png').convert_alpha()
 player_image2 = pygame.transform.scale(player_image2, (largura_player, altura_player))
-
-
 
 # ----- Inicia estruturas de dados
 game = True
@@ -60,19 +63,19 @@ class Player(pygame.sprite.Sprite):
         # Atualização da posição do jogador
         keys = pygame.key.get_pressed()
         if keys[self.keys['up']]:
-            self.speedy = -3
+            self.speedy = -5
             self.speedx = 0
         elif keys[self.keys['down']]:
-            self.speedy = 3
+            self.speedy = 5
             self.speedx = 0
         else:
             self.speedy = 0
 
         if keys[self.keys['left']]:
-            self.speedx = -3
+            self.speedx = -5
             self.speedy = 0
         elif keys[self.keys['right']]:
-            self.speedx = 3
+            self.speedx = 5
             self.speedy = 0
         else:
             self.speedx = 0
@@ -185,6 +188,7 @@ botao_altura = 100
 botao_posicao_x = 400
 botao_posicao_y = 130
 
+
 # Variável para verificar se o botão está pressionado em Pygame
 botao_clicado = False
 
@@ -208,7 +212,6 @@ while executando:
         janela.blit(capitao,(botao_posicao_x + 12, botao_posicao_y + 55))
     else:
 
-        import time
         clock = pygame.time.Clock()
         #atualiza a tela 60 vezes por segundo
         FPS = 60
@@ -217,17 +220,17 @@ while executando:
         start_time = time.time()
         time_started = False
         tempo_restante = 0
-        
+
         # ===== Loop principal =====
         while game:
             clock.tick(FPS)
-            
+
             current_time = time.time() - start_time
             
             if current_time>=1 and not time_started:
                 time_started = True
                 start_time = time.time()
-
+            
             # ----- Trata eventos
             for event in pygame.event.get():
                 # ----- Verifica consequências
@@ -276,35 +279,31 @@ while executando:
             score1_text = font.render("Jogador 1: " + str(score1), True, (BRANCO))
             window.blit(score1_text, (10, 10))
             score2_text = font.render("Jogador 2: " + str(score2), True, (BRANCO))
-            window.blit(score2_text, (250, 10))
-            
-            if current_time >= 55:
-                tempo_restante = 60 - current_time
-                tempo_text = font.render("Tempo restante: {0:.0f}".format((tempo_restante)), True, (255,255,255))
-                window.blit(tempo_text, (100, 100)) 
+            window.blit(score2_text, (10, 50))
+
 
             if time_started:
-                if current_time >= 55:
-                    tempo_restante = 60 - current_time
-                    tempo_text = font.render("Tempo restante: {0:.0f}".format((tempo_restante)), True, (255,255,255))
-                    window.blit(tempo_text, (100, 100))
+
+                tempo_restante = 60-current_time
+                tempo_text = font.render("Tempo restante: {0:.0f}".format((tempo_restante)), True, (255,255,255))
+                window.blit(tempo_text, (270, 10)) 
+
                 if current_time >= 60:
                     if score1>score2:
                         window.fill((0, 0, 0))  # Preenche com a cor preta
-                        window.blit(background_bob, (80, 80)) 
-                        bob_text = font.render("Jogador 1 venceu! ", True, (BRANCO))
+                        bob_text = font.render("Jogador 1 venceu! ", True, (PRETO))
+                        window.blit(background_bob, (0, 0)) 
                         window.blit(bob_text, (10, 10))                   
-                    if score2>score1:
+                    elif score2>score1:
                         window.fill((0, 0, 0))  # Preenche com a cor preta
-                        pat_text = font.render("Jogador 2 venceu! ", True, (BRANCO))
-                        window.blit(pat_text, (10, 10))   
-                        window.blit(background_patrick, (80, 100))
+                        pat_text = font.render("Jogador 2 venceu! ", True, (PRETO))   
+                        window.blit(background_patrick, (0, 0))
+                        window.blit(pat_text, (10, 10))
                     else:
                         window.fill((0, 0, 0))  # Preenche com a cor preta
                         holandes_text = font.render("O holandes voador venceu =( ", True, (BRANCO))
+                        window.blit(background_holandes, (0, 0))
                         window.blit(holandes_text, (10, 10))   
-                        window.blit(background_holandes, (80, 180))
-
 
             pygame.display.update()
 
