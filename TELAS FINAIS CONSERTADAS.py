@@ -285,11 +285,11 @@ while executando:
 
             if time_started:
 
-                tempo_restante = 10-current_time
+                tempo_restante = 60-current_time
                 tempo_text = font.render("Tempo restante: {0:.0f}".format((tempo_restante)), True, (255,255,255))
                 window.blit(tempo_text, (270, 10)) 
 
-                if current_time >= 10:
+                if current_time >= 60:
                     game = False
                     executando = False 
 
