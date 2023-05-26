@@ -44,8 +44,8 @@ player_image2 = pygame.image.load('imagens/patrick_com_rede.png').convert_alpha(
 player_image2 = pygame.transform.scale(player_image2, (largura_player, altura_player))
 
 # Carrega os sons do jogo
-pygame.mixer.music.load('assets/snd/tgfcoder-FrozenJam-SeamlessLoop.ogg')
 pygame.mixer.music.set_volume(0.4)
+musica = pygame.mixer.Sound('musica.mp3')
 # ----- Inicia estruturas de dados
 game = True
 score1 = 0
@@ -228,8 +228,8 @@ while executando:
         tempo_restante = 0
 
         # ===== Loop principal =====
+        musica.play()
         while game:
-            
             clock.tick(FPS)
 
             current_time = time.time() - start_time
