@@ -51,8 +51,14 @@ musica = pygame.mixer.Sound('musica.mp3')
 som_agua_viva = pygame.mixer.Sound('somag.mp3')
 boom = pygame.mixer.Sound('boom.mp3')
 boom.set_volume(2)
+
 heheheha = pygame.mixer.Sound('heheheha.mp3')
 heheheha.set_volume(2)
+
+sominicio = pygame.mixer.Sound('sominicio.mp3')
+sominicio.set_volume(0.2)
+
+
 # ----- Inicia estruturas de dados
 game = True
 score1 = 0
@@ -208,10 +214,13 @@ botao_posicao_y = 130
 
 # Variável para verificar se o botão está pressionado em Pygame
 botao_clicado = False
-
 #loop da tela de entrada
 executando = True
+tocando= True
+
 while executando:
+    if tocando:
+        sominicio.play()
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             executando = False
@@ -219,20 +228,23 @@ while executando:
             if botao_posicao_x <= pygame.mouse.get_pos()[0] <= botao_posicao_x + botao_largura \
                     and botao_posicao_y <= pygame.mouse.get_pos()[1] <= botao_posicao_y + botao_altura:
                 botao_clicado = True
+                tocando = False
         elif evento.type == pygame.KEYDOWN:
             if evento.key == pygame.K_ESCAPE:  # Exemplo: Encerrar o jogo ao pressionar a tecla ESC
                 botao_clicado = True
+                tocando = False
             elif evento.key == pygame.K_SPACE:
                 botao_clicado = True
+                tocando= False
 
-
+    
     # Desenha o botão em Pygame
     janela.blit(image, (0, 1))
     if not botao_clicado:
         janela.blit(estamos,((WIDTH // 2) - 100, (HEIGHT // 2) + 250))
         pygame.display.update()
     else:
-
+        pygame.mixer.stop()
         clock = pygame.time.Clock()
         #atualiza a tela 60 vezes por segundo
         FPS = 60
@@ -245,6 +257,7 @@ while executando:
         # ===== Loop principal =====
         musica.play()
         while game:
+
             clock.tick(FPS)
 
             current_time = time.time() - start_time
@@ -322,7 +335,6 @@ while executando:
 
             pygame.display.update()
 
-pygame.mixer.stop()
 tela_final = True
 while tela_final:
     for evento in pygame.event.get():
