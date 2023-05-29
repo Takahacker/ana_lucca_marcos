@@ -1,7 +1,7 @@
 import pygame
 import random
 import time
-
+import json
 
 pygame.mixer.init()
 pygame.init()
@@ -11,7 +11,19 @@ pygame.init()
 WIDTH = 600
 HEIGHT = 600
 window = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('Crossy Ocean')
+BRANCO = (255, 255, 255)
+PRETO = (0, 0, 0)
+VERMELHO = (255,0,0)
+
+# Carregar o dicionário de jogadores existente do arquivo JSON, se houver
+try:
+    with open("players.json", "r") as file:
+        players = json.load(file)
+except FileNotFoundError:
+    players = {}
+
+player_name = ""
+player_score = 0
 
 # ----- Inicia assets
 largura_agua_viva = 60
@@ -185,40 +197,50 @@ janela = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Botão de Reprodução")
 
 #tela de entrada
-BRANCO = (255, 255, 255)
-PRETO = (0, 0, 0)
 image = pygame.image.load('imagens/entrada.jpeg').convert()
 image = pygame.transform.scale(image,(WIDTH,HEIGHT))
-estamos = font_small.render("Aperte", True, BRANCO)
-capitao = font_small.render("para jogar", True, BRANCO)
-# Posição e dimensões do botão em Pygame
-botao_largura = 100
-botao_altura = 100
-botao_posicao_x = 400
-botao_posicao_y = 130
-
 
 # Variável para verificar se o botão está pressionado em Pygame
 botao_clicado = False
-
+nomes_colocados = 0
 #loop da tela de entrada
 executando = True
 while executando:
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             executando = False
-        elif evento.type == pygame.MOUSEBUTTONDOWN:
-            if botao_posicao_x <= pygame.mouse.get_pos()[0] <= botao_posicao_x + botao_largura \
-                    and botao_posicao_y <= pygame.mouse.get_pos()[1] <= botao_posicao_y + botao_altura:
-                botao_clicado = True
-
+        elif evento.type == pygame.KEYDOWN:
+            if evento.key == pygame.K_RETURN:
+                # Quando o jogador pressionar Enter, adicionar o nome e pontuação ao dicionário de jogadores
+                nomes_colocados += 1
+                if player_name:
+                    players[player_name] = player_score
+                    with open("players.json", "w") as file:
+                        json.dump(players, file)
+                    player_name = ""
+                    player_score = 0
+                if nomes_colocados == 2:
+                    nomes_colocados = 0
+                    botao_clicado = True
+            elif evento.key == pygame.K_BACKSPACE:
+                # Quando o jogador pressionar Backspace, remover o último caractere do nome
+                player_name = player_name[:-1]
+            elif evento.key == pygame.K_UP:
+                # Quando o jogador pressionar a seta para cima, aumentar a pontuação
+                player_score += 1
+            elif evento.key == pygame.K_DOWN:
+                # Quando o jogador pressionar a seta para baixo, diminuir a pontuação (mínimo de 0)
+                player_score = max(0, player_score - 1)
+            else:
+                # Adicionar o caractere digitado ao nome do jogador
+                player_name += evento.unicode
 
     # Desenha o botão em Pygame
     janela.blit(image, (0, 1))
-    pygame.draw.rect(janela, PRETO, (botao_posicao_x, botao_posicao_y, botao_largura, botao_altura))
+    text = font.render("Digite seu nome: " + player_name, True, BRANCO)
+    text_rect = text.get_rect(center=(300, 550))
+    window.blit(text, text_rect)
     if not botao_clicado:
-        janela.blit(estamos,(botao_posicao_x + 12, botao_posicao_y + 25))
-        janela.blit(capitao,(botao_posicao_x + 12, botao_posicao_y + 55))
         pygame.display.update()
     else:
 
