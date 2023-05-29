@@ -11,6 +11,8 @@ pygame.init()
 WIDTH = 600
 HEIGHT = 600
 window = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption('Crossy Ocean')
+
 # ----- Inicia assets
 largura_agua_viva = 60
 altura_agua_viva = 60
@@ -43,12 +45,11 @@ player_image2 = pygame.image.load('imagens/patrick_com_rede.png').convert_alpha(
 player_image2 = pygame.transform.scale(player_image2, (largura_player, altura_player))
 
 # Carrega os sons do jogo
+pygame.mixer.music.set_volume(0.4)
 musica = pygame.mixer.Sound('musica.mp3')
 som_agua_viva = pygame.mixer.Sound('somag.mp3')
 boom = pygame.mixer.Sound('boom.mp3')
-boom.set_volume(2)
 heheheha = pygame.mixer.Sound('heheheha.mp3')
-heheheha.set_volume(2)
 # ----- Inicia estruturas de dados
 game = True
 score1 = 0
@@ -125,6 +126,7 @@ class AGUA_VIVA(pygame.sprite.Sprite):
             self.rect.bottom = random.randint(0, HEIGHT-100)
             self.speedx = random.randint(2, 6)
             self.speedy = 0
+
 class HOLANDES(pygame.sprite.Sprite):
     def __init__(self, imgagens):
         # Construtor da classe mãe (Sprite).
