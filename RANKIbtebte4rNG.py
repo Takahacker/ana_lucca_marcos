@@ -20,10 +20,8 @@ largura_player = 80
 altura_player = 80
 larg_tub = 130
 alt_tub = 90
-
-font = pygame.font.SysFont('imagens/Fontes/fonte.otf', 48)
-font_small = pygame.font.SysFont('imagens/Fontes/fonte.otf', 24)
-
+font = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 48)
+font_small = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 24)
 background = pygame.image.load('imagens/Image nova.jpg').convert()
 background = pygame.transform.scale(background,(WIDTH,HEIGHT))
 
@@ -47,12 +45,11 @@ player_image2 = pygame.image.load('imagens/patrick_com_rede.png').convert_alpha(
 player_image2 = pygame.transform.scale(player_image2, (largura_player, altura_player))
 
 # Carrega os sons do jogo
+pygame.mixer.music.set_volume(0.4)
 musica = pygame.mixer.Sound('musica.mp3')
 som_agua_viva = pygame.mixer.Sound('somag.mp3')
 boom = pygame.mixer.Sound('boom.mp3')
-boom.set_volume(2)
 heheheha = pygame.mixer.Sound('heheheha.mp3')
-heheheha.set_volume(2)
 # ----- Inicia estruturas de dados
 game = True
 score1 = 0
@@ -129,6 +126,7 @@ class AGUA_VIVA(pygame.sprite.Sprite):
             self.rect.bottom = random.randint(0, HEIGHT-100)
             self.speedx = random.randint(2, 6)
             self.speedy = 0
+
 class HOLANDES(pygame.sprite.Sprite):
     def __init__(self, imgagens):
         # Construtor da classe mãe (Sprite).
@@ -189,16 +187,10 @@ pygame.display.set_caption("Botão de Reprodução")
 #tela de entrada
 BRANCO = (255, 255, 255)
 PRETO = (0, 0, 0)
-
-image = pygame.image.load('imagens/tela_entrada.png').convert()
+image = pygame.image.load('imagens/entrada.jpeg').convert()
 image = pygame.transform.scale(image,(WIDTH,HEIGHT))
-
-font = pygame.font.SysFont('imagens/Fontes/fonte.ttf', 48)
-font_small = pygame.font.SysFont('imagens/Fontes/fonte.ttf', 24)
-
-
-estamos = font_small.render("Aperte espaço para jogar", True, BRANCO)
-
+estamos = font_small.render("Aperte", True, BRANCO)
+capitao = font_small.render("para jogar", True, BRANCO)
 # Posição e dimensões do botão em Pygame
 botao_largura = 100
 botao_altura = 100
@@ -219,17 +211,14 @@ while executando:
             if botao_posicao_x <= pygame.mouse.get_pos()[0] <= botao_posicao_x + botao_largura \
                     and botao_posicao_y <= pygame.mouse.get_pos()[1] <= botao_posicao_y + botao_altura:
                 botao_clicado = True
-        elif evento.type == pygame.KEYDOWN:
-            if evento.key == pygame.K_ESCAPE:  # Exemplo: Encerrar o jogo ao pressionar a tecla ESC
-                botao_clicado = True
-            elif evento.key == pygame.K_SPACE:
-                botao_clicado = True
 
 
     # Desenha o botão em Pygame
     janela.blit(image, (0, 1))
+    pygame.draw.rect(janela, PRETO, (botao_posicao_x, botao_posicao_y, botao_largura, botao_altura))
     if not botao_clicado:
-        janela.blit(estamos,((WIDTH // 2) - 100, (HEIGHT // 2) + 250))
+        janela.blit(estamos,(botao_posicao_x + 12, botao_posicao_y + 25))
+        janela.blit(capitao,(botao_posicao_x + 12, botao_posicao_y + 55))
         pygame.display.update()
     else:
 
@@ -340,7 +329,7 @@ while tela_final:
         window.blit(pat_text, (10, 10))
     else:
         window.fill((0, 0, 0))  # Preenche com a cor preta
-        holandes_text = font.render("O holandes voador venceu", True, (BRANCO))
+        holandes_text = font.render("O holandes voador venceu =( ", True, (BRANCO))
         window.blit(background_holandes, (0, 0))
         window.blit(holandes_text, (10, 10))   
 
