@@ -44,11 +44,12 @@ player_image2 = pygame.image.load('imagens/patrick_com_rede.png').convert_alpha(
 player_image2 = pygame.transform.scale(player_image2, (largura_player, altura_player))
 
 # Carrega os sons do jogo
-pygame.mixer.music.set_volume(0.4)
 musica = pygame.mixer.Sound('musica.mp3')
 som_agua_viva = pygame.mixer.Sound('somag.mp3')
 boom = pygame.mixer.Sound('boom.mp3')
+boom.set_volume(2)
 heheheha = pygame.mixer.Sound('heheheha.mp3')
+heheheha.set_volume(2)
 # ----- Inicia estruturas de dados
 game = True
 score1 = 0
