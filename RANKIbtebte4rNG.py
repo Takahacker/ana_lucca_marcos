@@ -203,6 +203,7 @@ image = pygame.transform.scale(image,(WIDTH,HEIGHT))
 # Variável para verificar se o botão está pressionado em Pygame
 botao_clicado = False
 nomes_colocados = 0
+nomes_jogadores = []
 #loop da tela de entrada
 executando = True
 while executando:
@@ -212,6 +213,7 @@ while executando:
         elif evento.type == pygame.KEYDOWN:
             if evento.key == pygame.K_RETURN:
                 # Quando o jogador pressionar Enter, adicionar o nome e pontuação ao dicionário de jogadores
+                nomes_jogadores.append(player_name)
                 nomes_colocados += 1
                 if player_name:
                     players[player_name] = player_score
@@ -237,13 +239,21 @@ while executando:
 
     # Desenha o botão em Pygame
     janela.blit(image, (0, 1))
-    text = font.render("Digite seu nome: " + player_name, True, BRANCO)
+
+    if nomes_colocados == 0:
+        text = font.render("Nome do jogador 1: " + player_name, True, BRANCO)
+
+    elif nomes_colocados == 1:
+        text = font.render("Nome do jogador 2: " + player_name, True, BRANCO)
+
     text_rect = text.get_rect(center=(300, 550))
     window.blit(text, text_rect)
     if not botao_clicado:
         pygame.display.update()
     else:
 
+        nome_jogador1 = nomes_jogadores[0]
+        nome_jogador2 = nomes_jogadores[1]
         clock = pygame.time.Clock()
         #atualiza a tela 60 vezes por segundo
         FPS = 60
@@ -315,9 +325,9 @@ while executando:
             all_sprites.draw(window)
 
             # Exibe a pontuação na tela
-            score1_text = font.render("Jogador 1: " + str(score1), True, (BRANCO))
+            score1_text = font.render(f"{nome_jogador1}: " + str(score1), True, (BRANCO))
             window.blit(score1_text, (10, 10))
-            score2_text = font.render("Jogador 2: " + str(score2), True, (BRANCO))
+            score2_text = font.render(f"{nome_jogador2}: " + str(score2), True, (BRANCO))
             window.blit(score2_text, (10, 50))
 
 
@@ -333,7 +343,27 @@ while executando:
 
             pygame.display.update()
 
+#atualiza arquivo com as pontuacoes
+with open('players.json', 'r') as file:
+    conteudo = file.read()
+dados = json.loads(conteudo)
+for player in dados:
+    if player == nome_jogador1:
+        dados[nome_jogador1] = score1
+    elif player == nome_jogador2:
+        dados[nome_jogador2] = score2
+high_score = max(dados.values())
+for player,pontuacao in dados.items():
+    if pontuacao == high_score:
+        best_player = player
+
+with open('players.json', 'w') as file:
+    json.dump(dados, file)
+    
 pygame.mixer.stop()
+
+highscore_text = font.render("Pontuação máxima:", True, (PRETO))
+bestplayer_text = font.render(f"{best_player} --> {high_score}", True, (PRETO))
 tela_final = True
 while tela_final:
     for evento in pygame.event.get():
@@ -341,18 +371,24 @@ while tela_final:
             tela_final = False
     if score1>score2:
         window.fill((0, 0, 0))  # Preenche com a cor preta
-        bob_text = font.render("Jogador 1 venceu! ", True, (PRETO))
+        bob_text = font.render(f"{nome_jogador1} venceu! ", True, (PRETO))
         window.blit(background_bob, (0, 0)) 
-        window.blit(bob_text, (10, 10))                   
+        window.blit(bob_text, (10, 10))
+        window.blit(highscore_text, (10, 200))
+        window.blit(bestplayer_text, (10, 250))                
     elif score2>score1:
         window.fill((0, 0, 0))  # Preenche com a cor preta
-        pat_text = font.render("Jogador 2 venceu! ", True, (PRETO))   
+        pat_text = font.render(f"{nome_jogador2} venceu! ", True, (PRETO))   
         window.blit(background_patrick, (0, 0))
         window.blit(pat_text, (10, 10))
+        window.blit(highscore_text, (10, 200))
+        window.blit(bestplayer_text, (10, 250)) 
     else:
         window.fill((0, 0, 0))  # Preenche com a cor preta
         holandes_text = font.render("O holandes voador venceu =( ", True, (BRANCO))
         window.blit(background_holandes, (0, 0))
-        window.blit(holandes_text, (10, 10))   
+        window.blit(holandes_text, (10, 10))
+        window.blit(highscore_text, (10, 200))
+        window.blit(bestplayer_text, (10, 250))   
 
     pygame.display.update()
