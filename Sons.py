@@ -10,8 +10,6 @@ pygame.init()
 WIDTH = 600
 HEIGHT = 600
 window = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('Crossy Ocean')
-
 # ----- Inicia assets
 largura_agua_viva = 60
 altura_agua_viva = 60
@@ -126,7 +124,6 @@ class AGUA_VIVA(pygame.sprite.Sprite):
             self.rect.bottom = random.randint(0, HEIGHT-100)
             self.speedx = random.randint(2, 6)
             self.speedy = 0
-
 class HOLANDES(pygame.sprite.Sprite):
     def __init__(self, imgagens):
         # Construtor da classe mãe (Sprite).
