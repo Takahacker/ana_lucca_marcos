@@ -66,6 +66,8 @@ musica = pygame.mixer.Sound('musica.mp3')
 som_agua_viva = pygame.mixer.Sound('somag.mp3')
 boom = pygame.mixer.Sound('boom.mp3')
 heheheha = pygame.mixer.Sound('heheheha.mp3')
+sominicio = pygame.mixer.Sound('sominicio.mp3')
+sominicio.set_volume(0.2)
 
 # ----- Inicia estruturas de dados
 game = True
@@ -210,9 +212,12 @@ pygame.display.set_caption("Botão de Reprodução")
 botao_clicado = False
 nomes_colocados = 0
 nomes_jogadores = []
+tocando = True
 #loop da tela de entrada
 executando = True
 while executando:
+    if tocando:
+        sominicio.play()
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             executando = False
@@ -264,7 +269,7 @@ while executando:
     if not botao_clicado:
         pygame.display.update()
     else:
-
+        pygame.mixer.stop()
         nome_jogador1 = nomes_jogadores[0]
         nome_jogador2 = nomes_jogadores[1]
         clock = pygame.time.Clock()

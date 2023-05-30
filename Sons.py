@@ -27,13 +27,6 @@ font_small = pygame.font.SysFont('imagens/Fontes/fonte.ttf', 24)
 background = pygame.image.load('imagens/Image nova.jpg').convert()
 background = pygame.transform.scale(background,(WIDTH,HEIGHT))
 
-background_bob = pygame.image.load('imagens/ganhador1.jpeg').convert()
-background_bob = pygame.transform.scale(background_bob,(WIDTH,HEIGHT))
-background_patrick = pygame.image.load('imagens/patrick.png').convert()
-background_patrick = pygame.transform.scale(background_patrick,(WIDTH,HEIGHT))
-background_holandes = pygame.image.load('imagens/holandes_ganhador.jpeg').convert()
-background_holandes = pygame.transform.scale(background_holandes,(WIDTH,HEIGHT))
-
 agua_viva = pygame.image.load('imagens/AGUAVIVA.png').convert_alpha()
 agua_viva_small = pygame.transform.scale(agua_viva, (largura_agua_viva, altura_agua_viva))
 
@@ -60,9 +53,6 @@ sominicio.set_volume(0.2)
 
 som_bob_ganha = pygame.mixer.Sound('bobganha.mp3')
 som_bob_ganha.set_volume(0.2)
-
-
-
 
 
 # ----- Inicia estruturas de dados
