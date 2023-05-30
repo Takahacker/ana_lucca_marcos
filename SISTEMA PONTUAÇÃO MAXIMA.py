@@ -422,7 +422,7 @@ while tela_final:
      
     else:
         window.fill((0, 0, 0))  # Preenche com a cor preta
-        holandes_text = fonte.render("O holandês voador venceu", True, (PRETO))
+        holandes_text = fonte.render("EMPATE", True, (PRETO))
         window.blit(background_pontuacao, (0,0))
         window.blit(holandes_text, (100, 200))
         highscore_text = fonte.render("Melhor jogador:", True, (BRANCO))
