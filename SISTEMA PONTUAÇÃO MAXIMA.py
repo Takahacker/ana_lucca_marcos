@@ -35,8 +35,8 @@ larg_tub = 130
 level = 0
 alt_tub = 90
 
-fonte = pygame.font.SysFont('imagens/Fontes/fonte.ttf', 50)
-fonte_small = pygame.font.SysFont('imagens/Fontes/fonte.ttf', 40)
+fonte = pygame.font.Font('fonte.ttf', 20)
+fonte_small = pygame.font.Font('fonte.ttf', 20)
 
 background = pygame.image.load('imagens/Image nova.jpg').convert()
 background = pygame.transform.scale(background,(WIDTH,HEIGHT))
@@ -257,6 +257,7 @@ while executando:
     janela.blit(IMAGEM_CERTA,(0,0))
 
     if nomes_colocados == 0:
+
         text = fonte.render("Nome do jogador 1: " + player_name, True, BRANCO)
 
     elif nomes_colocados == 1:
