@@ -57,8 +57,8 @@ player_image2 = pygame.transform.scale(player_image2, (largura_player, altura_pl
 background_pontuacao = pygame.image.load('imagens/1_tela_pontuacao.png').convert_alpha()
 background_pontuacao = pygame.transform.scale(background_pontuacao, (WIDTH, HEIGHT))
 
-image = pygame.image.load('imagens/tela_entrada.png').convert()
-tela_entrada = pygame.transform.scale(image,(WIDTH,HEIGHT))
+IMAGEM_CERTA = pygame.image.load('imagens/tela_entrada.png').convert()
+IMAGEM_CERTA = pygame.transform.scale(IMAGEM_CERTA,(WIDTH,HEIGHT))
 
 # Carrega os sons do jogo
 pygame.mixer.music.set_volume(0.4)
@@ -66,7 +66,8 @@ musica = pygame.mixer.Sound('musica.mp3')
 som_agua_viva = pygame.mixer.Sound('somag.mp3')
 boom = pygame.mixer.Sound('boom.mp3')
 heheheha = pygame.mixer.Sound('heheheha.mp3')
-
+sominicio = pygame.mixer.Sound('sominicio.mp3')
+sominicio.set_volume(0.2)
 # ----- Inicia estruturas de dados
 game = True
 score1 = 0
@@ -213,6 +214,7 @@ nomes_jogadores = []
 #loop da tela de entrada
 executando = True
 while executando:
+    sominicio.play()
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             executando = False
@@ -250,7 +252,7 @@ while executando:
                 player_name += evento.unicode
 
     # Desenha o botão em Pygame
-    janela.blit(image, (0, 1))
+    janela.blit(IMAGEM_CERTA,(0,0))
 
     if nomes_colocados == 0:
         text = fonte.render("Nome do jogador 1: " + player_name, True, BRANCO)
@@ -264,7 +266,7 @@ while executando:
     if not botao_clicado:
         pygame.display.update()
     else:
-
+        pygame.mixer.stop()
         nome_jogador1 = nomes_jogadores[0]
         nome_jogador2 = nomes_jogadores[1]
         clock = pygame.time.Clock()
