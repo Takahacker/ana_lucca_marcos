@@ -68,6 +68,7 @@ boom = pygame.mixer.Sound('boom.mp3')
 heheheha = pygame.mixer.Sound('heheheha.mp3')
 sominicio = pygame.mixer.Sound('sominicio.mp3')
 sominicio.set_volume(0.2)
+
 # ----- Inicia estruturas de dados
 game = True
 score1 = 0
@@ -211,10 +212,10 @@ pygame.display.set_caption("Botão de Reprodução")
 botao_clicado = False
 nomes_colocados = 0
 nomes_jogadores = []
+tocando = True
 #loop da tela de entrada
 executando = True
 while executando:
-    sominicio.play()
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             executando = False
