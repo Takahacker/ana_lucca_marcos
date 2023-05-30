@@ -3,6 +3,7 @@ import random
 import time
 import json
 
+
 pygame.mixer.init()
 pygame.init()
 
@@ -14,6 +15,7 @@ window = pygame.display.set_mode((WIDTH, HEIGHT))
 BRANCO = (255, 255, 255)
 PRETO = (0, 0, 0)
 VERMELHO = (255,0,0)
+CINZA = (117, 120, 123)
 
 # Carregar o dicionário de jogadores existente do arquivo JSON, se houver
 try:
@@ -30,18 +32,15 @@ altura_agua_viva = 60
 largura_player = 80
 altura_player = 80
 larg_tub = 130
+level = 0
 alt_tub = 90
-font = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 48)
-font_small = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 24)
+
+fonte = pygame.font.SysFont('imagens/Fontes/fonte.ttf', 50)
+fonte_small = pygame.font.SysFont('imagens/Fontes/fonte.ttf', 40)
+
 background = pygame.image.load('imagens/Image nova.jpg').convert()
 background = pygame.transform.scale(background,(WIDTH,HEIGHT))
 
-background_bob = pygame.image.load('imagens/ganhador1.jpeg').convert()
-background_bob = pygame.transform.scale(background_bob,(WIDTH,HEIGHT))
-background_patrick = pygame.image.load('imagens/ganhador2.jpeg').convert()
-background_patrick = pygame.transform.scale(background_patrick,(WIDTH,HEIGHT))
-background_holandes = pygame.image.load('imagens/holandes_ganhador.jpeg').convert()
-background_holandes = pygame.transform.scale(background_holandes,(WIDTH,HEIGHT))
 
 agua_viva = pygame.image.load('imagens/AGUAVIVA.png').convert_alpha()
 agua_viva_small = pygame.transform.scale(agua_viva, (largura_agua_viva, altura_agua_viva))
@@ -54,6 +53,12 @@ player_image1 = pygame.transform.scale(player_image1, (largura_player, altura_pl
 
 player_image2 = pygame.image.load('imagens/patrick_com_rede.png').convert_alpha()
 player_image2 = pygame.transform.scale(player_image2, (largura_player, altura_player))
+
+background_pontuacao = pygame.image.load('imagens/1_tela_pontuacao.png').convert_alpha()
+background_pontuacao = pygame.transform.scale(background_pontuacao, (WIDTH, HEIGHT))
+
+image = pygame.image.load('imagens/tela_entrada.png').convert()
+tela_entrada = pygame.transform.scale(image,(WIDTH,HEIGHT))
 
 # Carrega os sons do jogo
 pygame.mixer.music.set_volume(0.4)
@@ -161,8 +166,13 @@ class HOLANDES(pygame.sprite.Sprite):
         if self.rect.top < 0 or self.rect.bottom > HEIGHT or self.rect.left > WIDTH:
             self.rect.x = -100
             self.rect.bottom = random.randint(0, HEIGHT-100)
-            self.speedx = random.randint(2, 6)
             self.speedy = 0
+            if level == 0:
+                self.speedx = random.randint(2, 3)
+            elif level == 1:
+                self.speedx = random.randint(5, 6)
+            else:
+                self.speedx = random.randint(6, 8)
 
 # ----- Criação de objetos
 player1 = Player(player_image1, {'up': pygame.K_w, 'down': pygame.K_s, 'left': pygame.K_a, 'right': pygame.K_d})
@@ -191,14 +201,10 @@ for i in range(2):
 
 clock = pygame.time.Clock()
 FPS = 60
-
+i=0
 # Configurações da janela em Pygame
 janela = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Botão de Reprodução")
-
-#tela de entrada
-image = pygame.image.load('imagens/entrada.jpeg').convert()
-image = pygame.transform.scale(image,(WIDTH,HEIGHT))
 
 # Variável para verificar se o botão está pressionado em Pygame
 botao_clicado = False
@@ -247,13 +253,14 @@ while executando:
     janela.blit(image, (0, 1))
 
     if nomes_colocados == 0:
-        text = font.render("Nome do jogador 1: " + player_name, True, BRANCO)
+        text = fonte.render("Nome do jogador 1: " + player_name, True, BRANCO)
 
     elif nomes_colocados == 1:
-        text = font.render("Nome do jogador 2: " + player_name, True, BRANCO)
+        text = fonte.render("Nome do jogador 2: " + player_name, True, BRANCO)
 
     text_rect = text.get_rect(center=(300, 550))
     window.blit(text, text_rect)
+
     if not botao_clicado:
         pygame.display.update()
     else:
@@ -280,6 +287,10 @@ while executando:
                 time_started = True
                 start_time = time.time()
             
+            if current_time >= 35 and current_time<=50:
+                level = 1
+            elif current_time >= 50:
+                level = 2
             # ----- Trata eventos
             for event in pygame.event.get():
                 # ----- Verifica consequências
@@ -331,21 +342,26 @@ while executando:
             all_sprites.draw(window)
 
             # Exibe a pontuação na tela
-            score1_text = font.render(f"{nome_jogador1}: " + str(score1), True, (BRANCO))
+            score1_text = fonte.render(f"{nome_jogador1}: " + str(score1), True, (BRANCO))
             window.blit(score1_text, (10, 10))
-            score2_text = font.render(f"{nome_jogador2}: " + str(score2), True, (BRANCO))
+            score2_text = fonte.render(f"{nome_jogador2}: " + str(score2), True, (BRANCO))
             window.blit(score2_text, (10, 50))
 
 
             if time_started:
 
                 tempo_restante = 60-current_time
-                tempo_text = font.render("Tempo restante: {0:.0f}".format((tempo_restante)), True, (255,255,255))
+                tempo_text = fonte.render("Tempo restante: {0:.0f}".format((tempo_restante)), True, (255,255,255))
                 window.blit(tempo_text, (270, 10)) 
 
                 if current_time >= 60:
                     game = False
                     executando = False 
+
+                elif current_time >= 20 and i ==1:
+                    tubarao = HOLANDES(tubarao_grande)
+                    all_tubaroes.add(tubarao)
+                    i+=1
 
             pygame.display.update()
 
@@ -370,35 +386,44 @@ with open('players.json', 'w') as file:
 
 pygame.mixer.stop()
 
-highscore_text = font.render("Pontuação máxima:", True, (PRETO))
-bestplayer_text = font.render(f"{best_player} --> {high_score}", True, (PRETO))
+highscore_text = fonte.render("Pontuação máxima:", True, (PRETO))
+bestplayer_text = fonte.render(f"{best_player} --> {high_score}", True, (PRETO))
 tela_final = True
+
 while tela_final:
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             tela_final = False
+
+        
     if score1>score2:
         window.fill((0, 0, 0))  # Preenche com a cor preta
-        bob_text = font.render(f"{nome_jogador1} venceu! ", True, (PRETO))
-        window.blit(background_bob, (0, 0)) 
+        bob_text = fonte.render(f"{nome_jogador1} venceu! ", True, (PRETO))
+        window.blit(background_pontuacao, (0,0)) 
         window.blit(bob_text, (10, 10))
-        window.blit(highscore_text, (10, 450))
-        window.blit(bestplayer_text, (10, 500))                
+        highscore_text = fonte.render("Melhor jogador:", True, (BRANCO))
+        bestplayer_text = fonte_small.render(f"{best_player}: {high_score}", True, (BRANCO))
+        window.blit(highscore_text, (100, 500))
+        window.blit(bestplayer_text, (100, 550))
+                        
     elif score2>score1:
         window.fill((0, 0, 0))  # Preenche com a cor preta
-        pat_text = font.render(f"{nome_jogador2} venceu! ", True, (PRETO))
-        window.blit(background_patrick, (0, 0))
-        window.blit(pat_text, (10, 10))
-        window.blit(highscore_text, (270, 10))
-        window.blit(bestplayer_text, (270, 60)) 
+        pat_text = fonte.render(f"{nome_jogador2} venceu! ", True, (PRETO))
+        window.blit(background_pontuacao, (0,0))
+        window.blit(pat_text, (100, 200))
+        highscore_text = fonte.render("Melhor jogador:", True, (BRANCO))
+        bestplayer_text = fonte_small.render(f"{best_player}: {high_score}", True, (BRANCO))
+        window.blit(highscore_text, (100, 500))
+        window.blit(bestplayer_text, (100, 550))
+     
     else:
         window.fill((0, 0, 0))  # Preenche com a cor preta
-        highscore_text = font.render("Pontuação máxima:", True, (BRANCO))
-        bestplayer_text = font.render(f"{best_player} --> {high_score}", True, (BRANCO))
-        holandes_text = font.render("O holandes voador venceu =( ", True, (BRANCO))
-        window.blit(background_holandes, (0, 0))
-        window.blit(holandes_text, (10, 10))
+        holandes_text = fonte.render("O holandês voador venceu", True, (PRETO))
+        window.blit(background_pontuacao, (0,0))
+        window.blit(holandes_text, (100, 200))
+        highscore_text = fonte.render("Melhor jogador:", True, (BRANCO))
+        bestplayer_text = fonte_small.render(f"{best_player}: {high_score}", True, (BRANCO))
         window.blit(highscore_text, (100, 500))
-        window.blit(bestplayer_text, (100, 550))   
+        window.blit(bestplayer_text, (100, 550))
 
     pygame.display.update()
