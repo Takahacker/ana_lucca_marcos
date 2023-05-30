@@ -62,6 +62,7 @@ musica = pygame.mixer.Sound('musica.mp3')
 som_agua_viva = pygame.mixer.Sound('somag.mp3')
 boom = pygame.mixer.Sound('boom.mp3')
 heheheha = pygame.mixer.Sound('heheheha.mp3')
+
 # ----- Inicia estruturas de dados
 game = True
 score1 = 0

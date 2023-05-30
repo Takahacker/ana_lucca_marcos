@@ -58,6 +58,12 @@ heheheha.set_volume(2)
 sominicio = pygame.mixer.Sound('sominicio.mp3')
 sominicio.set_volume(0.2)
 
+som_bob_ganha = pygame.mixer.Sound('bobganha.mp3')
+som_bob_ganha.set_volume(0.2)
+
+
+
+
 
 # ----- Inicia estruturas de dados
 game = True
@@ -266,6 +272,7 @@ while executando:
                 time_started = True
                 start_time = time.time()
             
+            
             # ----- Trata eventos
             for event in pygame.event.get():
                 # ----- Verifica consequências
@@ -344,7 +351,9 @@ while tela_final:
         window.fill((0, 0, 0))  # Preenche com a cor preta
         bob_text = font.render("Jogador 1 venceu! ", True, (PRETO))
         window.blit(background_bob, (0, 0)) 
-        window.blit(bob_text, (10, 10))                   
+        window.blit(bob_text, (10, 10))
+        musica = False 
+        som_bob_ganha.play()
     elif score2>score1:
         window.fill((0, 0, 0))  # Preenche com a cor preta
         pat_text = font.render("Jogador 2 venceu! ", True, (PRETO))   
