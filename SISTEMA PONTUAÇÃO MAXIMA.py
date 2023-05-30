@@ -68,7 +68,7 @@ boom = pygame.mixer.Sound('boom.mp3')
 heheheha = pygame.mixer.Sound('heheheha.mp3')
 sominicio = pygame.mixer.Sound('sominicio.mp3')
 sominicio.set_volume(0.2)
-
+bobganha = pygame.mixer.Sound('bobganha.mp3')
 # ----- Inicia estruturas de dados
 game = True
 score1 = 0
@@ -393,7 +393,7 @@ pygame.mixer.stop()
 highscore_text = fonte.render("Pontuação máxima:", True, (PRETO))
 bestplayer_text = fonte.render(f"{best_player} --> {high_score}", True, (PRETO))
 tela_final = True
-
+bobganha.play()
 while tela_final:
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
