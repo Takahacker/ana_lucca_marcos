@@ -401,7 +401,6 @@ while tela_final:
     current_time2 = 0
     clock.tick(FPS)
     FPS = 60
-    cu
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             tela_final = False
