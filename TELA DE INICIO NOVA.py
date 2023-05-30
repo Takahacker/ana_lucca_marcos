@@ -23,7 +23,6 @@ except FileNotFoundError:
     players = {}
 
 player_name = ""
-player_score = 0
 
 # ----- Inicia assets
 largura_agua_viva = 60
@@ -36,6 +35,9 @@ font = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 
 font_small = pygame.font.SysFont('imagens/Fontes/retro_mario/RetroMario-Regular.otf', 24)
 background = pygame.image.load('imagens/Image nova.jpg').convert()
 background = pygame.transform.scale(background,(WIDTH,HEIGHT))
+
+IMAGEM_CERTA = pygame.image.load('imagens/tela_entrada.png').convert()
+IMAGEM_CERTA = pygame.transform.scale(IMAGEM_CERTA,(WIDTH,HEIGHT))
 
 background_bob = pygame.image.load('imagens/ganhador1.jpeg').convert()
 background_bob = pygame.transform.scale(background_bob,(WIDTH,HEIGHT))
@@ -62,6 +64,8 @@ musica = pygame.mixer.Sound('musica.mp3')
 som_agua_viva = pygame.mixer.Sound('somag.mp3')
 boom = pygame.mixer.Sound('boom.mp3')
 heheheha = pygame.mixer.Sound('heheheha.mp3')
+sominicio = pygame.mixer.Sound('sominicio.mp3')
+sominicio.set_volume(0.2)
 
 # ----- Inicia estruturas de dados
 game = True
@@ -198,8 +202,6 @@ janela = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Botão de Reprodução")
 
 #tela de entrada
-image = pygame.image.load('imagens/entrada.jpeg').convert()
-image = pygame.transform.scale(image,(WIDTH,HEIGHT))
 
 # Variável para verificar se o botão está pressionado em Pygame
 botao_clicado = False
@@ -208,6 +210,7 @@ nomes_jogadores = []
 #loop da tela de entrada
 executando = True
 while executando:
+    sominicio.play()
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             executando = False
@@ -217,11 +220,17 @@ while executando:
                 nomes_jogadores.append(player_name)
                 nomes_colocados += 1
                 if player_name:
-                    players[player_name] = player_score
+                    with open("players.json", "r") as file:
+                        conteudo = file.read()
+                    dados = json.loads(conteudo)
+                    for player in dados:
+                        if player == player_name:
+                            player_score = dados[player]
+                    if player_name not in dados:
+                        dados[player_name] = 0
                     with open("players.json", "w") as file:
-                        json.dump(players, file)
+                        json.dump(dados, file)
                     player_name = ""
-                    player_score = 0
                 if nomes_colocados == 2:
                     nomes_colocados = 0
                     botao_clicado = True
@@ -239,20 +248,21 @@ while executando:
                 player_name += evento.unicode
 
     # Desenha o botão em Pygame
-    janela.blit(image, (0, 1))
+    janela.blit(IMAGEM_CERTA, (0, 0))
 
     if nomes_colocados == 0:
-        text = font.render("Nome do jogador 1: " + player_name, True, BRANCO)
+        text = font.render("Nome do jogador 1: " + player_name, True, PRETO)
 
     elif nomes_colocados == 1:
-        text = font.render("Nome do jogador 2: " + player_name, True, BRANCO)
+        text = font.render("Nome do jogador 2: " + player_name, True, PRETO)
 
     text_rect = text.get_rect(center=(300, 550))
-    window.blit(text, text_rect)
+    janela.blit(text, text_rect)
     if not botao_clicado:
         pygame.display.update()
     else:
 
+        pygame.mixer.stop()
         nome_jogador1 = nomes_jogadores[0]
         nome_jogador2 = nomes_jogadores[1]
         clock = pygame.time.Clock()
@@ -350,9 +360,11 @@ with open('players.json', 'r') as file:
 dados = json.loads(conteudo)
 for player in dados:
     if player == nome_jogador1:
-        dados[nome_jogador1] = score1
+        if score1 > dados[nome_jogador1]:
+            dados[nome_jogador1] = score1
     elif player == nome_jogador2:
-        dados[nome_jogador2] = score2
+        if score2 > dados[nome_jogador2]:
+            dados[nome_jogador2] = score2
 high_score = max(dados.values())
 for player,pontuacao in dados.items():
     if pontuacao == high_score:
@@ -360,7 +372,7 @@ for player,pontuacao in dados.items():
 
 with open('players.json', 'w') as file:
     json.dump(dados, file)
-    
+
 pygame.mixer.stop()
 
 highscore_text = font.render("Pontuação máxima:", True, (PRETO))
@@ -375,21 +387,23 @@ while tela_final:
         bob_text = font.render(f"{nome_jogador1} venceu! ", True, (PRETO))
         window.blit(background_bob, (0, 0)) 
         window.blit(bob_text, (10, 10))
-        window.blit(highscore_text, (10, 200))
-        window.blit(bestplayer_text, (10, 250))                
+        window.blit(highscore_text, (10, 450))
+        window.blit(bestplayer_text, (10, 500))                
     elif score2>score1:
         window.fill((0, 0, 0))  # Preenche com a cor preta
-        pat_text = font.render(f"{nome_jogador2} venceu! ", True, (PRETO))   
+        pat_text = font.render(f"{nome_jogador2} venceu! ", True, (PRETO))
         window.blit(background_patrick, (0, 0))
         window.blit(pat_text, (10, 10))
-        window.blit(highscore_text, (10, 200))
-        window.blit(bestplayer_text, (10, 250)) 
+        window.blit(highscore_text, (270, 10))
+        window.blit(bestplayer_text, (270, 60)) 
     else:
         window.fill((0, 0, 0))  # Preenche com a cor preta
+        highscore_text = font.render("Pontuação máxima:", True, (BRANCO))
+        bestplayer_text = font.render(f"{best_player} --> {high_score}", True, (BRANCO))
         holandes_text = font.render("O holandes voador venceu =( ", True, (BRANCO))
         window.blit(background_holandes, (0, 0))
         window.blit(holandes_text, (10, 10))
-        window.blit(highscore_text, (10, 200))
-        window.blit(bestplayer_text, (10, 250))   
+        window.blit(highscore_text, (100, 500))
+        window.blit(bestplayer_text, (100, 550))   
 
     pygame.display.update()
