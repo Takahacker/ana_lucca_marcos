@@ -222,6 +222,8 @@ while executando:
                     for player in dados:
                         if player == player_name:
                             player_score = dados[player]
+                    if player_name not in dados:
+                        dados[player_name] = 0
                     with open("players.json", "w") as file:
                         json.dump(dados, file)
                     player_name = ""
