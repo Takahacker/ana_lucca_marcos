@@ -23,7 +23,6 @@ except FileNotFoundError:
     players = {}
 
 player_name = ""
-player_score = 0
 
 # ----- Inicia assets
 largura_agua_viva = 60
@@ -216,11 +215,15 @@ while executando:
                 nomes_jogadores.append(player_name)
                 nomes_colocados += 1
                 if player_name:
-                    players[player_name] = player_score
+                    with open("players.json", "r") as file:
+                        conteudo = file.read()
+                    dados = json.loads(conteudo)
+                    for player in dados:
+                        if player == player_name:
+                            player_score = dados[player]
                     with open("players.json", "w") as file:
-                        json.dump(players, file)
+                        json.dump(dados, file)
                     player_name = ""
-                    player_score = 0
                 if nomes_colocados == 2:
                     nomes_colocados = 0
                     botao_clicado = True
@@ -349,9 +352,11 @@ with open('players.json', 'r') as file:
 dados = json.loads(conteudo)
 for player in dados:
     if player == nome_jogador1:
-        dados[nome_jogador1] = score1
+        if score1 > dados[nome_jogador1]:
+            dados[nome_jogador1] = score1
     elif player == nome_jogador2:
-        dados[nome_jogador2] = score2
+        if score2 > dados[nome_jogador2]:
+            dados[nome_jogador2] = score2
 high_score = max(dados.values())
 for player,pontuacao in dados.items():
     if pontuacao == high_score:
@@ -359,7 +364,7 @@ for player,pontuacao in dados.items():
 
 with open('players.json', 'w') as file:
     json.dump(dados, file)
-    
+
 pygame.mixer.stop()
 
 highscore_text = font.render("Pontuação máxima:", True, (PRETO))
@@ -374,21 +379,23 @@ while tela_final:
         bob_text = font.render(f"{nome_jogador1} venceu! ", True, (PRETO))
         window.blit(background_bob, (0, 0)) 
         window.blit(bob_text, (10, 10))
-        window.blit(highscore_text, (10, 200))
-        window.blit(bestplayer_text, (10, 250))                
+        window.blit(highscore_text, (10, 450))
+        window.blit(bestplayer_text, (10, 500))                
     elif score2>score1:
         window.fill((0, 0, 0))  # Preenche com a cor preta
-        pat_text = font.render(f"{nome_jogador2} venceu! ", True, (PRETO))   
+        pat_text = font.render(f"{nome_jogador2} venceu! ", True, (PRETO))
         window.blit(background_patrick, (0, 0))
         window.blit(pat_text, (10, 10))
-        window.blit(highscore_text, (10, 200))
-        window.blit(bestplayer_text, (10, 250)) 
+        window.blit(highscore_text, (270, 10))
+        window.blit(bestplayer_text, (270, 60)) 
     else:
         window.fill((0, 0, 0))  # Preenche com a cor preta
+        highscore_text = font.render("Pontuação máxima:", True, (BRANCO))
+        bestplayer_text = font.render(f"{best_player} --> {high_score}", True, (BRANCO))
         holandes_text = font.render("O holandes voador venceu =( ", True, (BRANCO))
         window.blit(background_holandes, (0, 0))
         window.blit(holandes_text, (10, 10))
-        window.blit(highscore_text, (10, 200))
-        window.blit(bestplayer_text, (10, 250))   
+        window.blit(highscore_text, (100, 500))
+        window.blit(bestplayer_text, (100, 550))   
 
     pygame.display.update()
