@@ -57,9 +57,11 @@ while running:
     text = font.render("Digite seu nome: " + player_name, True, WHITE)
     text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 50))
     screen.blit(text, text_rect)
+    '''
     score_text = font.render("Pontuação: " + str(player_score), True, WHITE)
     score_rect = score_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
     screen.blit(score_text, score_rect)
+    '''
     pygame.display.flip()
 
 pygame.quit()
