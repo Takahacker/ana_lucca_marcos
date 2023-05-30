@@ -54,6 +54,9 @@ sominicio.set_volume(0.2)
 som_bob_ganha = pygame.mixer.Sound('bobganha.mp3')
 som_bob_ganha.set_volume(0.2)
 
+ganha_holandes = pygame.mixer.Sound('holandezganha.mp3')
+ganha_holandes.set_volume(0.2)
+
 
 # ----- Inicia estruturas de dados
 game = True
@@ -332,6 +335,7 @@ while executando:
 
             pygame.display.update()
 
+pygame.mixer.stop()
 tela_final = True
 while tela_final:
     for evento in pygame.event.get():
@@ -342,8 +346,8 @@ while tela_final:
         bob_text = font.render("Jogador 1 venceu! ", True, (PRETO))
         window.blit(background_bob, (0, 0)) 
         window.blit(bob_text, (10, 10))
-        musica = False 
         som_bob_ganha.play()
+        
     elif score2>score1:
         window.fill((0, 0, 0))  # Preenche com a cor preta
         pat_text = font.render("Jogador 2 venceu! ", True, (PRETO))   
@@ -351,8 +355,10 @@ while tela_final:
         window.blit(pat_text, (10, 10))
     else:
         window.fill((0, 0, 0))  # Preenche com a cor preta
-        holandes_text = font.render("O holandes voador venceu", True, (BRANCO))
+        holandes_text = font.render("O Holandes voador venceu", True, (BRANCO))
         window.blit(background_holandes, (0, 0))
-        window.blit(holandes_text, (10, 10))   
+        window.blit(holandes_text, (10, 10))
+        ganha_holandes.play()
+        
 
     pygame.display.update()
