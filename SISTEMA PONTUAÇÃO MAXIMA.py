@@ -216,6 +216,7 @@ tocando = True
 #loop da tela de entrada
 executando = True
 while executando:
+    sominicio.play()
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             executando = False
