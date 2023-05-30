@@ -21,15 +21,15 @@ altura_player = 80
 larg_tub = 130
 alt_tub = 90
 
-font = pygame.font.SysFont('imagens/Fontes/fonte.otf', 48)
-font_small = pygame.font.SysFont('imagens/Fontes/fonte.otf', 24)
+font = pygame.font.SysFont('imagens/Fontes/fonte.ttf', 48)
+font_small = pygame.font.SysFont('imagens/Fontes/fonte.ttf', 24)
 
 background = pygame.image.load('imagens/Image nova.jpg').convert()
 background = pygame.transform.scale(background,(WIDTH,HEIGHT))
 
 background_bob = pygame.image.load('imagens/ganhador1.jpeg').convert()
 background_bob = pygame.transform.scale(background_bob,(WIDTH,HEIGHT))
-background_patrick = pygame.image.load('imagens/ganhador2.jpeg').convert()
+background_patrick = pygame.image.load('imagens/patrick.png').convert()
 background_patrick = pygame.transform.scale(background_patrick,(WIDTH,HEIGHT))
 background_holandes = pygame.image.load('imagens/holandes_ganhador.jpeg').convert()
 background_holandes = pygame.transform.scale(background_holandes,(WIDTH,HEIGHT))
