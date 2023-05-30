@@ -206,7 +206,7 @@ FPS = 60
 i=0
 # Configurações da janela em Pygame
 janela = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Botão de Reprodução")
+pygame.display.set_caption("Nosso jogo")
 
 # Variável para verificar se o botão está pressionado em Pygame
 botao_clicado = False
@@ -394,8 +394,14 @@ pygame.mixer.stop()
 highscore_text = fonte.render("Pontuação máxima:", True, (PRETO))
 bestplayer_text = fonte.render(f"{best_player} --> {high_score}", True, (PRETO))
 tela_final = True
+start_time = time.time
 bobganha.play()
 while tela_final:
+    clock = pygame.time.Clock()
+    current_time2 = 0
+    clock.tick(FPS)
+    FPS = 60
+    cu
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             tela_final = False
@@ -430,5 +436,9 @@ while tela_final:
         bestplayer_text = fonte_small.render(f"{best_player}: {high_score}", True, (BRANCO))
         window.blit(highscore_text, (100, 500))
         window.blit(bestplayer_text, (100, 550))
+    
+        
+
+
 
     pygame.display.update()
