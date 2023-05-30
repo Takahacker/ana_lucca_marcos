@@ -35,8 +35,7 @@ larg_tub = 130
 level = 0
 alt_tub = 90
 
-fonte = pygame.font.SysFont('imagens/Fontes/fonte.ttf', 50)
-fonte_small = pygame.font.SysFont('imagens/Fontes/fonte.ttf', 40)
+fonte = pygame.font.Font('fonte.ttf', 30)
 
 background = pygame.image.load('imagens/Image nova.jpg').convert()
 background = pygame.transform.scale(background,(WIDTH,HEIGHT))
@@ -414,8 +413,8 @@ def Ranking():
     window.blit(highscore_text, (X, Y))
     e = 50
     for i in range (len(best_players)):
-        bestplayer_text = fonte_small.render(f"{best_players[i]}", True, (PRETO))
-        bestpontuacoes_text = fonte_small.render(f"{best_pontuacoes[i]}", True, (PRETO))
+        bestplayer_text = fonte.render(f"{best_players[i]}", True, (PRETO))
+        bestpontuacoes_text = fonte.render(f"{best_pontuacoes[i]}", True, (PRETO))
         window.blit(bestplayer_text, (X, Y+e))
         window.blit(bestpontuacoes_text, (X+125, Y+e))
         e += 50
