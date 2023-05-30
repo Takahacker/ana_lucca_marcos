@@ -212,7 +212,6 @@ pygame.display.set_caption("Botão de Reprodução")
 botao_clicado = False
 nomes_colocados = 0
 nomes_jogadores = []
-tocando = True
 #loop da tela de entrada
 executando = True
 while executando:
