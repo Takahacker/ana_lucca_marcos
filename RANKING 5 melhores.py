@@ -378,7 +378,7 @@ while executando:
                 som_agua_viva.play()
                 score1 += 4
                 gary = GARY(gary_image)
-                all_gary.add(gary_image)
+                all_gary.add(gary)
 
             if pygame.sprite.spritecollide(player2, all_gary, True):
                 som_agua_viva.play()

@@ -2,7 +2,7 @@
 
 O jogo foi inspirado no desenho Bob Esponja Calça Quadrada, da produtora Nickleodeon, e tem como principal objetivo coletar as águas-vivas e fujir do holandês voador (vilão do desenho). É um jogo multiplayer, em que o jogador 1 pode jogar dando comando pelas teclas 'W', 'A', 'S', 'D' e o jogador 2, com as setas do teclado. O game também conta com ranking dos 5 melhores jogadores (lógica feita com armazenamento permanente em arquivo) e fases, contadas pelo tempo e iteradas pela velocidde dos obstáculos.
 
-
+*TODOS OS DIREITOS RESERVADOS A NICKELODEON. JOGO CRIADO SEM FINS LUCRATIVOS*
 Fontes:
 
 Imagem ganhador 1: https://www.bing.com/images/search?view=detailV2&ccid=tW2E%2bCs7&id=A5EF97573E75B4521128D344D2310C9FE50415A5&thid=OIP.tW2E-Cs7ND18nCcFmdBSYgHaFj&mediaurl=https%3a%2f%2fstudiosol-a.akamaihd.net%2fuploadfile%2fletras%2ffotos%2fa%2f4%2f5%2f7%2fa4570f70cc85cb9d4f38878a49df2707.jpg&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.b56d84f82b3b343d7c9c270599d05262%3frik%3dpRUE5Z8MMdJE0w%26pid%3dImgRaw%26r%3d0&exph=530&expw=706&q=imagens++bob+esponja&simid=608013180284923657&FORM=IRPRST&ck=468C2DC2DCF3D88C8D23B3EBF33C4B6B&selectedIndex=84&ajaxhist=0&ajaxserp=0 
