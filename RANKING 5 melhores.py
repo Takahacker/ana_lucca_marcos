@@ -75,6 +75,7 @@ bobganha = pygame.mixer.Sound('bobganha.mp3')
 game = True
 score1 = 0
 score2 = 0
+tempo_gary = 0
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, imagens, keys):
@@ -248,7 +249,7 @@ FPS = 60
 i=0
 # Configurações da janela em Pygame
 janela = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Botão de Reprodução")
+pygame.display.set_caption("Jelly Jumble")
 
 # Variável para verificar se o botão está pressionado em Pygame
 botao_clicado = False
@@ -377,14 +378,18 @@ while executando:
             if pygame.sprite.spritecollide(player1, all_gary, True):
                 som_agua_viva.play()
                 score1 += 4
-                gary = GARY(gary_image)
-                all_gary.add(gary)
 
             if pygame.sprite.spritecollide(player2, all_gary, True):
                 som_agua_viva.play()
                 score2 += 4
+                
+            tempo_gary += clock.get_time() / 1000  # Converte o tempo para segundos
+
+            # Verifica se é hora de criar um novo Gary
+            if tempo_gary >= 15:
                 gary = GARY(gary_image)
                 all_gary.add(gary)
+                tempo_gary = 0  # Reinicia o contador de tempo para a próxima aparição do Gary
 
             for tubarao in all_tubaroes:
                 tubarao.update()
@@ -419,7 +424,7 @@ while executando:
 
                 if current_time >= 60:
                     game = False
-                    executando = False 
+                    executando = False
 
                 elif current_time >= 20 and i ==1:
                     tubarao = HOLANDES(tubarao_grande)
