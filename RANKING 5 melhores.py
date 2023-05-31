@@ -50,6 +50,9 @@ tubarao_grande = pygame.transform.scale(tubarao, (larg_tub, alt_tub))
 player_image1 = pygame.image.load('imagens/bob_esponja_com_rede.png').convert_alpha()
 player_image1 = pygame.transform.scale(player_image1, (largura_player, altura_player))
 
+gary_image = pygame.image.load('imagens/gary.png').convert_alpha()
+gary_image = pygame.transform.scale(gary_image, (largura_agua_viva, altura_agua_viva))
+
 player_image2 = pygame.image.load('imagens/patrick_com_rede.png').convert_alpha()
 player_image2 = pygame.transform.scale(player_image2, (largura_player, altura_player))
 
@@ -145,6 +148,31 @@ class AGUA_VIVA(pygame.sprite.Sprite):
             self.speedx = random.randint(2, 6)
             self.speedy = 0
 
+class GARY(pygame.sprite.Sprite):
+    def __init__(self, imgagens):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = imgagens
+        self.rect = pygame.Rect(0, 0, largura_agua_viva, altura_agua_viva)
+        self.rect.x = random.randint(-100,-50)
+        self.rect.bottom = random.randint(0, HEIGHT-100)
+        self.speedx = random.randint(2, 6)
+        self.speedy = 0
+
+    def update(self):
+        # Atualizando a posição do peixe
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+
+        # Se o caracol passar do final da tela, volta para cima e sorteia
+        # novas posições e velocidades
+        if self.rect.top < 0 or self.rect.bottom > HEIGHT or self.rect.left > WIDTH:
+            self.rect.x = -100
+            self.rect.bottom = random.randint(0, HEIGHT-100)
+            self.speedx = 6
+            self.speedy = 0
+
 class HOLANDES(pygame.sprite.Sprite):
     def __init__(self, imgagens):
         # Construtor da classe mãe (Sprite).
@@ -182,6 +210,7 @@ player2 = Player(player_image2, {'up': pygame.K_UP, 'down': pygame.K_DOWN, 'left
 all_tubaroes = pygame.sprite.Group()
 all_aguas_vivas = pygame.sprite.Group()
 all_sprites = pygame.sprite.Group()
+all_gary = pygame.sprite.Group()
 
 # Adiciona jogadores ao grupo de sprites
 all_sprites.add(player1)
@@ -192,13 +221,27 @@ all_sprites.add(player2)
 player2.rect.centerx = WIDTH / 2
 player2.rect.bottom = HEIGHT - 12
 
+
+screen_uptdate_cout = 0
+
 for i in range(6):
     agua_viva1 = AGUA_VIVA(agua_viva_small)
     all_aguas_vivas.add(agua_viva1)
 
-for i in range(2):
-    tubarao = HOLANDES(tubarao_grande)
-    all_tubaroes.add(tubarao)
+if level == 0 or level==1:
+    for i in range(2):
+        tubarao = HOLANDES(tubarao_grande)
+        all_tubaroes.add(tubarao)
+
+if level == 2:
+    for i in range(3):
+        tubarao = HOLANDES(tubarao_grande)
+        all_tubaroes.add(tubarao)
+
+
+for i in range(1):
+    gary = GARY(gary_image)
+    all_gary.add(gary)
 
 clock = pygame.time.Clock()
 FPS = 60
@@ -215,6 +258,7 @@ nomes_jogadores = []
 executando = True
 while executando:
     sominicio.play()
+    screen_uptdate_cout += 1 
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             executando = False
@@ -289,9 +333,9 @@ while executando:
                 time_started = True
                 start_time = time.time()
             
-            if current_time >= 35 and current_time<=50:
+            if current_time >= 30 and current_time<=45:
                 level = 1
-            elif current_time >= 50:
+            elif current_time >= 45:
                 level = 2
             # ----- Trata eventos
             for event in pygame.event.get():
@@ -301,6 +345,7 @@ while executando:
 
             # ----- Atualiza estado do jogo
             all_sprites.update()
+
 
             # Verifica colisão entre os jogadores e os obstáculos
             if pygame.sprite.spritecollide(player1, all_tubaroes, False):
@@ -329,19 +374,35 @@ while executando:
                 agua_viva1 = AGUA_VIVA(agua_viva_small)
                 all_aguas_vivas.add(agua_viva1)
 
+            if pygame.sprite.spritecollide(player1, all_gary, True):
+                som_agua_viva.play()
+                score1 += 4
+                gary = GARY(gary_image)
+                all_gary.add(gary_image)
+
+            if pygame.sprite.spritecollide(player2, all_gary, True):
+                som_agua_viva.play()
+                score2 += 4
+                gary = GARY(gary_image)
+                all_gary.add(gary)
+
             for tubarao in all_tubaroes:
                 tubarao.update()
             
             for aguaviva in all_aguas_vivas:
                 aguaviva.update()
 
+            for gary in all_gary:
+                gary.update()
+
             # ----- Gera saídas
             window.fill((0, 0, 0))  # Preenche com a cor preta
             window.blit(background, (0, 0))
-
             all_tubaroes.draw(window)
             all_aguas_vivas.draw(window)
+            all_gary.draw(window)
             all_sprites.draw(window)
+            
 
             # Exibe a pontuação na tela
             score1_text = fonte.render(f"{nome_jogador1}: " + str(score1), True, (BRANCO))
