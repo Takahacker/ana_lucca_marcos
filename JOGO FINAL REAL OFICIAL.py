@@ -71,6 +71,7 @@ som_agua_viva = pygame.mixer.Sound('somag.mp3')
 boom = pygame.mixer.Sound('boom.mp3')
 heheheha = pygame.mixer.Sound('heheheha.mp3')
 sominicio = pygame.mixer.Sound('sominicio.mp3')
+som_gary = pygame.mixer.Sound('garysom.mp3')
 sominicio.set_volume(0.2)
 bobganha = pygame.mixer.Sound('bobganha.mp3')
 # ----- Inicia estruturas de dados
@@ -394,11 +395,11 @@ while executando:
                 all_aguas_vivas.add(agua_viva1)
 
             if pygame.sprite.spritecollide(player1, all_gary, True):
-                som_agua_viva.play()
+                som_gary.play()
                 score1 += 4
 
             if pygame.sprite.spritecollide(player2, all_gary, True):
-                som_agua_viva.play()
+                som_gary.play()
                 score2 += 4
                 
             tempo_gary += clock.get_time() / 1000  # Converte o tempo para segundos

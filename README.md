@@ -21,4 +21,6 @@ imagem holandes voador: https://www.bing.com/images/search?view=detailV2&ccid=L2
 
 ganhador holandes: https://www.bing.com/images/search?view=detailV2&ccid=Tui%2bnsB%2b&id=ACF71D58E8E50E47642ED3783E6410B3240DD8B5&thid=OIP.Tui-nsB-Pjz33hYPUvb75QAAAA&mediaurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.4ee8be9ec07e3e3cf7de160f52f6fbe5%3frik%3dtdgNJLMQZD540w%26riu%3dhttp%253a%252f%252fpm1.narvii.com%252f6385%252f7556a5ad3a24ccd02eaa4d014e1b182bfe6191b1_00.jpg%26ehk%3dIcGH2rVmw8MdyKWOJM7G57rHlYUy4nyG3lZk2ojtbOU%253d%26risl%3d%26pid%3dImgRaw%26r%3d0&exph=332&expw=443&q=imagens+bob+esponja+holandes+voados&simid=608037494097717623&FORM=IRPRST&ck=1DEED6DEA6B77898A1460281CDD8E51C&selectedIndex=4&ajaxhist=0&ajaxserp=0 
 
+som do gary: made by lucca nicoletti
+
 Fontes: https://www.dafont.com/pt/spongeboy-me-bob.font 
