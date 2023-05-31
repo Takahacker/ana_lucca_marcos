@@ -40,6 +40,8 @@ fonte = pygame.font.Font('fonte.ttf', 30)
 background = pygame.image.load('imagens/Image nova.jpg').convert()
 background = pygame.transform.scale(background,(WIDTH,HEIGHT))
 
+Tela_tutorial = pygame.image.load('tela_instrucoes.png').convert()
+Tela_tutorial = pygame.transform.scale(Tela_tutorial,(WIDTH,HEIGHT))
 
 agua_viva = pygame.image.load('imagens/AGUAVIVA.png').convert_alpha()
 agua_viva_small = pygame.transform.scale(agua_viva, (largura_agua_viva, altura_agua_viva))
@@ -62,9 +64,6 @@ background_pontuacao = pygame.transform.scale(background_pontuacao, (WIDTH, HEIG
 IMAGEM_CERTA = pygame.image.load('imagens/tela_entrada.png').convert()
 IMAGEM_CERTA = pygame.transform.scale(IMAGEM_CERTA,(WIDTH,HEIGHT))
 
-Tela_instrucao = pygame.image.load('tela_instrucoes.png')
-Tela_instrucao = pygame.transform.scale(Tela_instrucao,(WIDTH,HEIGHT))
-
 # Carrega os sons do jogo
 pygame.mixer.music.set_volume(0.4)
 musica = pygame.mixer.Sound('musica.mp3')
@@ -78,6 +77,7 @@ bobganha = pygame.mixer.Sound('bobganha.mp3')
 game = True
 score1 = 0
 score2 = 0
+tempo_gary = 0
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, imagens, keys):
@@ -206,6 +206,22 @@ class HOLANDES(pygame.sprite.Sprite):
             else:
                 self.speedx = random.randint(6, 8)
 
+def tela_tutorial(BOTAOCLICADO):
+    BOTAOCLICADO = False
+    executando1 = True
+    while executando1:
+        window.blit(Tela_tutorial,(0,0))
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                executando1 = False
+            elif evento.type == pygame.KEYDOWN:
+                if evento.key == pygame.K_RETURN:
+                    BOTAOCLICADO = True
+                    return BOTAOCLICADO
+        pygame.display.update()
+        
+
+
 # ----- Criação de objetos
 player1 = Player(player_image1, {'up': pygame.K_w, 'down': pygame.K_s, 'left': pygame.K_a, 'right': pygame.K_d})
 player2 = Player(player_image2, {'up': pygame.K_UP, 'down': pygame.K_DOWN, 'left': pygame.K_LEFT, 'right': pygame.K_RIGHT})
@@ -249,32 +265,14 @@ for i in range(1):
 clock = pygame.time.Clock()
 FPS = 60
 i=0
-# Configurações da janela em Pygame
-janela = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Botão de Reprodução")
+pygame.display.set_caption("Jelly Jumble")
 
 # Variável para verificar se o botão está pressionado em Pygame
 botao_clicado = False
 nomes_colocados = 0
 nomes_jogadores = []
+#loop da tela de entrada
 executando = True
-
-
-def tela_instrucoes():
-    JANELA = pygame.display.set_mode((WIDTH, HEIGHT))
-    JANELA = pygame.display.set_mode((WIDTH, HEIGHT))
-    JANELA.blit(Tela_instrucao,(0,0))
-    # Código para exibir a tela de instruções
-    executando1 = True
-    while executando1:
-        for evento in pygame.event.get():
-            if evento.type == pygame.QUIT:
-                executando1 = False
-            elif evento.type == pygame.KEYDOWN:
-                if evento.key == pygame.K_RETURN:
-                    executando1 = False
-                    botao_clicado = True
-
 while executando:
     sominicio.play()
     screen_uptdate_cout += 1 
@@ -300,7 +298,7 @@ while executando:
                     player_name = ""
                 if nomes_colocados == 2:
                     nomes_colocados = 0
-                    tela_instrucoes()
+                    botao_clicado = tela_tutorial(botao_clicado)
             elif evento.key == pygame.K_BACKSPACE:
                 # Quando o jogador pressionar Backspace, remover o último caractere do nome
                 player_name = player_name[:-1]
@@ -315,7 +313,7 @@ while executando:
                 player_name += evento.unicode
 
     # Desenha o botão em Pygame
-    janela.blit(IMAGEM_CERTA,(0,0))
+    window.blit(IMAGEM_CERTA,(0,0))
 
     if nomes_colocados == 0:
         text = fonte.render("Nome do jogador 1: " + player_name, True, PRETO)
@@ -396,14 +394,18 @@ while executando:
             if pygame.sprite.spritecollide(player1, all_gary, True):
                 som_agua_viva.play()
                 score1 += 4
-                gary = GARY(gary_image)
-                all_gary.add(gary)
 
             if pygame.sprite.spritecollide(player2, all_gary, True):
                 som_agua_viva.play()
                 score2 += 4
+                
+            tempo_gary += clock.get_time() / 1000  # Converte o tempo para segundos
+
+            # Verifica se é hora de criar um novo Gary
+            if tempo_gary >= 15:
                 gary = GARY(gary_image)
                 all_gary.add(gary)
+                tempo_gary = 0  # Reinicia o contador de tempo para a próxima aparição do Gary
 
             for tubarao in all_tubaroes:
                 tubarao.update()
@@ -438,7 +440,7 @@ while executando:
 
                 if current_time >= 60:
                     game = False
-                    executando = False 
+                    executando = False
 
                 elif current_time >= 20 and i ==1:
                     tubarao = HOLANDES(tubarao_grande)
