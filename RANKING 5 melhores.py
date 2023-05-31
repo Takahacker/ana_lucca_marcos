@@ -35,8 +35,7 @@ larg_tub = 130
 level = 0
 alt_tub = 90
 
-fonte = pygame.font.Font('fonte.ttf', 20)
-fonte_small = pygame.font.Font('fonte.ttf', 20)
+fonte = pygame.font.Font('fonte.ttf', 30)
 
 background = pygame.image.load('imagens/Image nova.jpg').convert()
 background = pygame.transform.scale(background,(WIDTH,HEIGHT))
@@ -206,13 +205,12 @@ FPS = 60
 i=0
 # Configurações da janela em Pygame
 janela = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Nosso jogo")
+pygame.display.set_caption("Botão de Reprodução")
 
 # Variável para verificar se o botão está pressionado em Pygame
 botao_clicado = False
 nomes_colocados = 0
 nomes_jogadores = []
-tocando = True
 #loop da tela de entrada
 executando = True
 while executando:
@@ -257,11 +255,10 @@ while executando:
     janela.blit(IMAGEM_CERTA,(0,0))
 
     if nomes_colocados == 0:
-
-        text = fonte.render("Nome do jogador 1: " + player_name, True, BRANCO)
+        text = fonte.render("Nome do jogador 1: " + player_name, True, PRETO)
 
     elif nomes_colocados == 1:
-        text = fonte.render("Nome do jogador 2: " + player_name, True, BRANCO)
+        text = fonte.render("Nome do jogador 2: " + player_name, True, PRETO)
 
     text_rect = text.get_rect(center=(300, 550))
     window.blit(text, text_rect)
@@ -381,26 +378,54 @@ for player in dados:
     elif player == nome_jogador2:
         if score2 > dados[nome_jogador2]:
             dados[nome_jogador2] = score2
-high_score = max(dados.values())
-for player,pontuacao in dados.items():
-    if pontuacao == high_score:
-        best_player = player
+
+ranking = {}
+current = 100000000
+for i in range(5):
+    high_score = 0
+    for player in dados:
+        pontuacao = dados[player]
+        if pontuacao > high_score and pontuacao < current:
+            high_score = pontuacao
+            best_player = player
+    ranking[best_player] = high_score
+    current = high_score
+
+best_players = []
+for player in ranking:
+    best_players.append(player)
+
+best_pontuacoes = []
+for pontuacao in ranking.values():
+    best_pontuacoes.append(pontuacao)
 
 with open('players.json', 'w') as file:
     json.dump(dados, file)
 
 pygame.mixer.stop()
-
-highscore_text = fonte.render("Pontuação máxima:", True, (PRETO))
-bestplayer_text = fonte.render(f"{best_player} --> {high_score}", True, (PRETO))
 tela_final = True
-start_time = time.time
 bobganha.play()
+
+def Ranking():
+    highscore_text = fonte.render("Top 5 players:", True, (PRETO))
+    X = 200
+    Y = 130
+    window.blit(highscore_text, (X, Y))
+    e = 50
+    for i in range (len(best_players)):
+        bestplayer_text = fonte.render(f"{best_players[i]}", True, (PRETO))
+        bestpontuacoes_text = fonte.render(f"{best_pontuacoes[i]}", True, (PRETO))
+        window.blit(bestplayer_text, (X, Y+e))
+        window.blit(bestpontuacoes_text, (X+125, Y+e))
+        e += 50
+
+def pontuacoes_partida():
+    pontuacao1_text = fonte.render(f"Pontos {nome_jogador1}: {score1}", True, (PRETO))
+    pontuacao2_text = fonte.render(f"Pontos {nome_jogador2}: {score2}", True, (PRETO))
+    window.blit(pontuacao1_text, (10, 490))
+    window.blit(pontuacao2_text, (10, 540))
+
 while tela_final:
-    clock = pygame.time.Clock()
-    current_time2 = 0
-    clock.tick(FPS)
-    FPS = 60
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             tela_final = False
@@ -409,35 +434,28 @@ while tela_final:
     if score1>score2:
         window.fill((0, 0, 0))  # Preenche com a cor preta
         bob_text = fonte.render(f"{nome_jogador1} venceu! ", True, (PRETO))
+        pontuacao1_text = fonte.render(f"Pontos {nome_jogador1}: {score1}", True, (PRETO))
+        pontuacao2_text = fonte.render(f"Pontos {nome_jogador2}: {score2}", True, (PRETO))
         window.blit(background_pontuacao, (0,0)) 
-        window.blit(bob_text, (10, 10))
-        highscore_text = fonte.render("Melhor jogador:", True, (BRANCO))
-        bestplayer_text = fonte_small.render(f"{best_player}: {high_score}", True, (BRANCO))
-        window.blit(highscore_text, (100, 500))
-        window.blit(bestplayer_text, (100, 550))
+        window.blit(bob_text, (170, 30))
+        pontuacoes_partida()
+        Ranking()
+
                         
     elif score2>score1:
         window.fill((0, 0, 0))  # Preenche com a cor preta
         pat_text = fonte.render(f"{nome_jogador2} venceu! ", True, (PRETO))
         window.blit(background_pontuacao, (0,0))
-        window.blit(pat_text, (100, 200))
-        highscore_text = fonte.render("Melhor jogador:", True, (BRANCO))
-        bestplayer_text = fonte_small.render(f"{best_player}: {high_score}", True, (BRANCO))
-        window.blit(highscore_text, (100, 500))
-        window.blit(bestplayer_text, (100, 550))
+        window.blit(pat_text, (170, 30))
+        pontuacoes_partida()
+        Ranking()
      
     else:
         window.fill((0, 0, 0))  # Preenche com a cor preta
         holandes_text = fonte.render("EMPATE", True, (PRETO))
         window.blit(background_pontuacao, (0,0))
-        window.blit(holandes_text, (100, 200))
-        highscore_text = fonte.render("Melhor jogador:", True, (BRANCO))
-        bestplayer_text = fonte_small.render(f"{best_player}: {high_score}", True, (BRANCO))
-        window.blit(highscore_text, (100, 500))
-        window.blit(bestplayer_text, (100, 550))
-    
-        
-
-
+        window.blit(holandes_text, (220, 30))
+        pontuacoes_partida()
+        Ranking()
 
     pygame.display.update()
