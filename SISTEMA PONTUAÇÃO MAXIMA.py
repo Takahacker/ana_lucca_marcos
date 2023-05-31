@@ -35,8 +35,8 @@ larg_tub = 130
 level = 0
 alt_tub = 90
 
-fonte = pygame.font.Font('fonte.ttf', 20)
-fonte_small = pygame.font.Font('fonte.ttf', 20)
+fonte = pygame.font.SysFont('imagens/Fontes/fonte.ttf', 50)
+fonte_small = pygame.font.SysFont('imagens/Fontes/fonte.ttf', 40)
 
 background = pygame.image.load('imagens/Image nova.jpg').convert()
 background = pygame.transform.scale(background,(WIDTH,HEIGHT))
@@ -68,7 +68,7 @@ boom = pygame.mixer.Sound('boom.mp3')
 heheheha = pygame.mixer.Sound('heheheha.mp3')
 sominicio = pygame.mixer.Sound('sominicio.mp3')
 sominicio.set_volume(0.2)
-bobganha = pygame.mixer.Sound('bobganha.mp3')
+
 # ----- Inicia estruturas de dados
 game = True
 score1 = 0
@@ -206,7 +206,7 @@ FPS = 60
 i=0
 # Configurações da janela em Pygame
 janela = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Nosso jogo")
+pygame.display.set_caption("Botão de Reprodução")
 
 # Variável para verificar se o botão está pressionado em Pygame
 botao_clicado = False
@@ -257,7 +257,6 @@ while executando:
     janela.blit(IMAGEM_CERTA,(0,0))
 
     if nomes_colocados == 0:
-
         text = fonte.render("Nome do jogador 1: " + player_name, True, BRANCO)
 
     elif nomes_colocados == 1:
@@ -394,13 +393,8 @@ pygame.mixer.stop()
 highscore_text = fonte.render("Pontuação máxima:", True, (PRETO))
 bestplayer_text = fonte.render(f"{best_player} --> {high_score}", True, (PRETO))
 tela_final = True
-start_time = time.time
-bobganha.play()
+
 while tela_final:
-    clock = pygame.time.Clock()
-    current_time2 = 0
-    clock.tick(FPS)
-    FPS = 60
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             tela_final = False
@@ -428,16 +422,12 @@ while tela_final:
      
     else:
         window.fill((0, 0, 0))  # Preenche com a cor preta
-        holandes_text = fonte.render("EMPATE", True, (PRETO))
+        holandes_text = fonte.render("O holandês voador venceu", True, (PRETO))
         window.blit(background_pontuacao, (0,0))
         window.blit(holandes_text, (100, 200))
         highscore_text = fonte.render("Melhor jogador:", True, (BRANCO))
         bestplayer_text = fonte_small.render(f"{best_player}: {high_score}", True, (BRANCO))
         window.blit(highscore_text, (100, 500))
         window.blit(bestplayer_text, (100, 550))
-    
-        
-
-
 
     pygame.display.update()

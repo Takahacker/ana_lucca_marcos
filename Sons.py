@@ -344,19 +344,19 @@ while tela_final:
     if score1>score2:
         window.fill((0, 0, 0))  # Preenche com a cor preta
         bob_text = font.render("Jogador 1 venceu! ", True, (PRETO))
-        window.blit(background_bob, (0, 0)) 
+        window.blit(background, (0, 0)) 
         window.blit(bob_text, (10, 10))
         som_bob_ganha.play()
         
     elif score2>score1:
         window.fill((0, 0, 0))  # Preenche com a cor preta
         pat_text = font.render("Jogador 2 venceu! ", True, (PRETO))   
-        window.blit(background_patrick, (0, 0))
+        window.blit(background, (0, 0))
         window.blit(pat_text, (10, 10))
     else:
         window.fill((0, 0, 0))  # Preenche com a cor preta
         holandes_text = font.render("O Holandes voador venceu", True, (BRANCO))
-        window.blit(background_holandes, (0, 0))
+        window.blit(background, (0, 0))
         window.blit(holandes_text, (10, 10))
         ganha_holandes.play()
         
