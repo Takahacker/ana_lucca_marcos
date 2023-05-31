@@ -482,7 +482,7 @@ def Ranking():
         bestplayer_text = fonte.render(f"{best_players[i]}", True, (PRETO))
         bestpontuacoes_text = fonte.render(f"{best_pontuacoes[i]}", True, (PRETO))
         window.blit(bestplayer_text, (X, Y+e))
-        window.blit(bestpontuacoes_text, (X+125, Y+e))
+        window.blit(bestpontuacoes_text, (X+200, Y+e))
         e += 50
 
 def pontuacoes_partida():

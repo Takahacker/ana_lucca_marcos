@@ -209,8 +209,10 @@ class HOLANDES(pygame.sprite.Sprite):
 def tela_tutorial(BOTAOCLICADO):
     BOTAOCLICADO = False
     executando1 = True
+    enter_text = fonte.render("aperte enter para jogar", True, (PRETO))
     while executando1:
         window.blit(Tela_tutorial,(0,0))
+        window.blit(enter_text,(125,550))
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 executando1 = False
@@ -498,7 +500,7 @@ def Ranking():
         bestplayer_text = fonte.render(f"{best_players[i]}", True, (PRETO))
         bestpontuacoes_text = fonte.render(f"{best_pontuacoes[i]}", True, (PRETO))
         window.blit(bestplayer_text, (X, Y+e))
-        window.blit(bestpontuacoes_text, (X+125, Y+e))
+        window.blit(bestpontuacoes_text, (X+200, Y+e))
         e += 50
 
 def pontuacoes_partida():
